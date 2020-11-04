@@ -16,3 +16,89 @@
 @import "bootstrap";
 
 @import "**/*";
+
+ /* ====================================================================================================================
+ * WEB-LAYOUT STYLES
+ * ====================================================================================================================*/
+
+body {
+    background-color: white;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: right;
+    background-color: black;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    border-bottom: 1em solid grey;
+    background-image: url(image-path('car-icon-blue.png'));
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: 200px;
+    height: 15vh;
+}
+
+header div.header-spacer {
+    width: 200px;
+}
+
+header h1 {
+    padding: 1em;
+}
+
+nav {
+    text-align: right;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.25em;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+tr:nth-child(odd) {
+    background: grey;
+}
+
+tr:first-child {
+    border-bottom : 2px solid black;
+    }
+
+footer {
+    border-top: 1em solid grey;
+    background-color: black;
+    color: white;
+    text-align: center;
+    border-bottom: 1em solid black;
+}
+
+footer h3 {
+    font-size: 1em;
+}
+
+div.footer-spacer {
+    height: 100px;
+    background-image: url(image-path('car-footer.png'));
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 75px;
+}
+
+ /* ====================================================================================================================
+ * SCREEN SIZE ADJUSTMENT
+ * ====================================================================================================================*/
+
+@media (max-width:600px) {
+    header {
+        background-size: 100px;
+        align-items: center;
+    }
+
+    header div.spacer {
+        width: 100px;
+    }
+}
