@@ -1,0 +1,18 @@
+<h1>Drivers</h1>
+
+<% if @drivers.length > 0 %>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>ID</th>
+    </tr>
+    <% @drivers.each do |driver| %>
+      <tr>
+        <td><%= driver.name %></td>
+        <td><%= driver.id %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p>No drivers in the system!</p>
+<% end %>

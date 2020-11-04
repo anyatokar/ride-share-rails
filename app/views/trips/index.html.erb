@@ -1,0 +1,24 @@
+<h1>Trips</h1>
+<% if @trips.length > 0 %>
+  <table>
+    <tr>
+      <th>Trip</th>
+      <th>Driver</th>
+      <th>Passenger</th>
+      <th>Cost</th>
+      <th>Rating</th>
+    </tr>
+    <% @trips.each do |trip| %>
+      <tr>
+        <td><%= trip.id %></td>
+        <td><%= trip.driver.name %></td>
+        <td><%= trip.passenger.name %></td>
+        <td><%= trip.cost %></td>
+        <td><%= trip.rating %></td>
+
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p>No passengers in the system!</p>
+<% end %>

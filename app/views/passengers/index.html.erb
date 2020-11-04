@@ -1,0 +1,17 @@
+<h1>Passengers</h1>
+<% if @passengers.length > 0 %>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>ID</th>
+    </tr>
+    <% @passengers.each do |passenger| %>
+      <tr>
+        <td><%= passenger.name %></td>
+        <td><%= passenger.id %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p>No passengers in the system!</p>
+<% end %>
