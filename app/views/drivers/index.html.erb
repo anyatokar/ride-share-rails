@@ -1,15 +1,23 @@
 <h1>Drivers</h1>
 
+<div class="pagination">
+  <%= will_paginate @drivers %>
+</div>
+
 <% if @drivers.length > 0 %>
   <table>
     <tr>
-      <th>Name</th>
       <th>ID</th>
+      <th>Name</th>
+      <th>Vin</th>
+      <th>Status</th>
     </tr>
     <% @drivers.each do |driver| %>
       <tr>
-        <td><%= driver.name %></td>
         <td><%= driver.id %></td>
+        <td><%= driver.name %></td>
+        <td><%= driver.vin %></td>
+        <td><%= driver.available %></td>
       </tr>
     <% end %>
   </table>

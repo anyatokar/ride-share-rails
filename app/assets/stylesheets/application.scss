@@ -39,6 +39,7 @@ header {
     background-repeat: no-repeat;
     background-size: 200px;
     height: 15vh;
+    min-height: 150px;
 }
 
 header div.header-spacer {
@@ -57,7 +58,9 @@ nav {
 
 table {
     border-collapse: collapse;
-    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    width: 90vh;
 }
 
 tr:nth-child(odd) {
@@ -87,6 +90,45 @@ div.footer-spacer {
     background-repeat: no-repeat;
     background-size: 75px;
 }
+
+ /* ====================================================================================================================
+ * PAGINATION
+ * ====================================================================================================================*/
+.pagination {
+  background: white;
+  margin: auto;
+  font-family: 'Poppins', sans serif;
+  /* self-clearing method: */ }
+  .pagination a, .pagination span, .pagination em {
+    padding: 0.2em 0.5em;
+    display: block;
+    margin-right: 1px; }
+  .pagination .disabled {
+    color: #999999;
+    border: 1px solid white; }
+  .pagination .current {
+    font-style: normal;
+    font-weight: bold;
+    background: grey;
+    color: black;
+    border: 1px solid white; }
+  .pagination a {
+    text-decoration: none;
+    color: blue;
+    border: 1px solid white; }
+    .pagination a:hover, .pagination a:focus {
+      color: #000033;
+      background: grey; }
+  .pagination:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
+  * html .pagination {
+    height: 1%; }
+  *:first-child + html .pagination {
+    overflow: hidden; }
 
  /* ====================================================================================================================
  * SCREEN SIZE ADJUSTMENT

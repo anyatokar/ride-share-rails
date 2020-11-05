@@ -1,0 +1,44 @@
+// Place all the styles related to the Homepages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+* {
+    text-align: center;
+}
+
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  min-width: 175px;
+}
+
+li {
+  display: inline-block;
+  align-items: center;
+}
+
+div.banner img {
+    width: 40vh;
+    max-width: 40vh;
+}
+div.image img {
+    border-top: 20px;
+    text-align: center;
+    width: 90vh;
+}
+
+div.spacer {
+    height: 10px;
+}
+
+h {
+    font-family: 'Poppins', sans-serif;
+}
