@@ -1,7 +1,38 @@
 <div>
-  <h1><%= @trip.id %></h1>
+  <h1>Trip Data</h1>
+<!--  <h4><strong>Trip ID:</strong> <%#= @trip.id %> </h4>-->
+<!--  <h4><strong>Driver:</strong> <%#= @trip.driver.name %> </h4>-->
+<!--  <h4><strong>Passenger:</strong> <%#= @trip.passenger.name %> </h4>-->
+<!--  <h4><strong>Cost:</strong> <%#= @trip.cost %> </h4>-->
+<!--  <h4><strong>Rating:</strong> <%#= @trip.rating %> </h4>-->
+  <div class="trip-avatar">
+    <%= image_tag("tripapp.png", :alt => "lineart of a rideshare app on a phone") %>
+  </div>
+  <br><br>
+
+    <table>
+      <tr>
+        <th>Trip ID</th>
+        <th>Driver</th>
+        <th>Passenger</th>
+        <th>Cost</th>
+        <th>Rating</th>
+      </tr>
+        <tr>
+          <td><%= @trip.id %></td>
+          <td><%= link_to @trip.driver.name, driver_path(@trip.driver.id) %></td>
+          <td><%= link_to @trip.passenger.name, passenger_path(@trip.passenger.id) %></td>
+          <td><%= @trip.cost %></td>
+          <td><%= @trip.rating %></td>
+        </tr>
+    </table>
+
   <!--  <h2>By: <%#= @driver.author.name %></h2>-->
-  <%= link_to "Edit", edit_trip_path(@trip) %>
-  <%= link_to "Delete", trip_path(@trip), method: :delete, data: {confirm: "Are you sure?"}%>
+  <li><%= button_to "Edit", edit_trip_path(@trip), :class => "button", method: :get %></li>
+  <li><%= button_to "Delete", trip_path(@trip), :class => "button", method: :delete, data: {confirm: "Are you sure?"} %></li>
+  <br><br>
+  <%#= link_to "Edit", edit_trip_path(@trip) %>
+  <%#= link_to "Delete", trip_path(@trip), method: :delete, data: {confirm: "Are you sure?"}%>
 </div>
+<!--<div class="profile-spacer"></div>-->
 <!--<p><%#= link_to "Return to Book List", books_path %></p> -->

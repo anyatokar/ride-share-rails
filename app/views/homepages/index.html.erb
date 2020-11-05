@@ -9,7 +9,7 @@
 </div>
 <br>
 <div class="buttons">
-  <li><%= button_to "New Passenger", new_passenger_path,  :class => "button" %></li>
-  <li><%= button_to "New Driver", new_driver_path,  :class => "button" %></li>
+  <li><%= button_to "New Passenger", new_passenger_path,  method: :get, :class => "button" %></li>
+  <li><%= button_to "New Driver", new_driver_path, method: :get, :class => "button" %></li>
 </div>
 <div class="spacer"></div>
