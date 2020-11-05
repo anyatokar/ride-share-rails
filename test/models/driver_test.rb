@@ -74,7 +74,7 @@ describe Driver do
     end
 
     describe "can go online" do
-      # TODO thinking these last 2 can go in the controller?
+      # TODO thinking these last 2 can go in the controller? Having trouble visulaizing these
     end
 
     describe "can go offline" do

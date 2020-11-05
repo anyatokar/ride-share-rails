@@ -6,13 +6,6 @@ describe TripsController do
     it "should get index" do
       get "/trip"
       must_respond_with :success
-      # must_respond_with :ok
-      # must_respond_with :server_error
-      # must_respond_with :bad_request
-      # must_respond_with :not_found
-
-      # must_redirect_to "/books"
-
     end
   end
 
