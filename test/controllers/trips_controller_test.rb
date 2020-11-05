@@ -4,7 +4,7 @@ describe TripsController do
 
   describe "index" do
     it "should get index" do
-      get "/trip"
+      get "/trips/"
       must_respond_with :success
     end
   end
@@ -123,7 +123,7 @@ describe TripsController do
       valid_id = Trip.last.id
 
       # Act
-      get edit_task_path(valid_id)
+      get edit_trip_path(valid_id)
 
       # Assert
       expect {
@@ -139,7 +139,7 @@ describe TripsController do
       invalid_id = -1
 
       # Act
-      get edit_task_path(invalid_id)
+      get edit_trip_path(invalid_id)
 
       # Assert
       must_respond_with :redirect
