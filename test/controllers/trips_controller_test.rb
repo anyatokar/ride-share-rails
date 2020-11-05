@@ -152,7 +152,6 @@ describe TripsController do
   end
 
   describe "update" do
-
     before do
       Trip.create(driver_id: kendrick_jr.id,
                   passenger_id: joe_biden.id,
