@@ -1,15 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>RideShareRails</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Ride The Rails: Rideshare App</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
-  <body>
-    <%= yield %>
-  </body>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+</head>
+
+<body>
+<header>
+  <%#= image_tag("car-icon-blue.png", :alt => "lineart of the front of a car") %>
+  <div class="header-spacer"></div>
+  <h1>Ride The Rails: RideShare App</h1>
+</header>
+<nav>
+  <p><%= link_to "Home", root_path %> | <%= link_to "Drivers", drivers_path %> | <%= link_to "Passengers", passengers_path %></p>
+</nav>
+<%= yield %>
+<div class="footer-spacer"></div>
+<footer>
+  <h3>Ride The Rails is © Ada Developers Academy, 2020.</h3></footer>
+</body>
 </html>
