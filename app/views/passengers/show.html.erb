@@ -1,0 +1,7 @@
+<div>
+  <h1><%= @passenger.name %></h1>
+  <!--  <h2>By: <%#= @driver.author.name %></h2>-->
+  <%= link_to "Edit", edit_passenger_path(@passenger) %>
+  <%= link_to "Delete", passenger_path(@passenger), method: :delete, data: {confirm: "Are you sure?"}%>
+</div>
+<!--<p><%#= link_to "Return to Book List", books_path %></p> -->

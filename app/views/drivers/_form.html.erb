@@ -1,0 +1,13 @@
+<%= form_with model: @driver, class: 'create-driver' do |f| %>
+  <p>Please provide the following information to edit your data in our database:</p>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.label :vin %>
+  <%= f.text_field :vin %>
+  <%#= f.select :driver_id, Driver.all.map{ |driver| [driver.name, driver.id] } %>
+  <%= f.label :available %>
+  <%#= f.select :driver_id, Driver.all.map{ |driver| [driver.available, driver.id] } %>
+  <%= f.select :available, [ 'true', 'false' ], :prompt => 'Select One' %>
+  <%= f.submit "#{action_name} Driver", class: "driver-button" %>
+<% end %>
+
