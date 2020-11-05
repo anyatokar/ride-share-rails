@@ -29,20 +29,19 @@ describe Trip do
   end
 
   describe "relationships" do
+    it "can have many trips" do
     # Arrange
-    # new_trip.save # TODO stuck on this
     new_driver = Driver.create(name: "Waldo", vin: "ALWSS52P9NEYLVDE9")
     new_passenger = Passenger.create(name: "Kari", phone_num: "111-111-1211")
     trip_1 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 1234)
     trip_2 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 6334)
+
+    new_driver_trip_count = Trip.all.find_all { |trip| trip.driver_id.to_i == new_driver.id.to_i}.length
+    new_passenger_trip_count = Trip.all.find_all { |passenger| passenger.passenger_id.to_i == new_passenger.id.to_i}.length
     # Assert
-    puts Trip.all.find_all { |trip| trip.driver_id == new_driver.id }
-      # find_ { |trip| trip.driver_id == new_driver.id }
-    # expect(Trip.all.find_all { |trip| trip.driver_id == new_driver.id }.length).must_equal 2
-    # Trip.each do |trip|
-    #   expect(Driver.find_by(driver_id: trip.driver_id)).must_be_instnace_of Driver
-    #   expect(Passenger.find_by(passenger_id: trip.driver_id)).must_be_instnace_of Driver
-    # end
+    expect(new_driver_trip_count).must_equal 2
+    expect(new_passenger_trip_count).must_equal 2
+    end
   end
 
   describe "validations" do
