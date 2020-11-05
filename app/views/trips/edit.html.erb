@@ -1,0 +1,18 @@
+<%= form_with model: @trip, class: 'edit-trip' do |f| %>
+  <!--  <h4><%#= f.label "Passenger > #{action_name}" %></h4>-->
+  <!--  <br>-->
+  <%= f.label :driver_id %>
+  <%= f.text_field :driver_id%>
+  <%= f.label :passenger_id %>
+  <%= f.text_field :passenger_id %>
+  <%= f.label :cost %>
+  <%= f.text_field :cost %>
+  <%= f.label :rating %>
+  <%= f.text_field :rating %>
+  <%#= f.select :driver_id, Driver.all.map{ |driver| [driver.name, driver.id] } %>
+  <%#= f.label :available %>
+  <%#= f.select :driver_id, Driver.all.map{ |driver| [driver.available, driver.id] } %>
+  <%#= f.select :available, [ 'true', 'false' ], :prompt => 'Select One' %>
+  <%= f.submit "Save", class: "button" %>
+  <div class="form-spacer"></div>
+<% end %>
