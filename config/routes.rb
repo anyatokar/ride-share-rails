@@ -3,8 +3,6 @@ Rails.application.routes.draw do
 
   root to: 'homepages#index'
   # TODO-- determine which RESTful routes are needed later
-  #
-  root to: 'trips#index'
   resources :drivers
   resources :trips
   resources :passengers
