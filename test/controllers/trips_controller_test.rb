@@ -18,6 +18,14 @@ describe TripsController do
                           cost: "5000")
     end
 
+      let (:kendrick_jr) {
+        Driver.create(name: "Kendrick Marks Jr")
+      }
+
+      let (:joe_biden) {
+        Passenger.create(name: "Joe Biden")
+      }
+
     it "will get show for valid ids" do
       # Arrange
       valid_trip_id = @trip.id
@@ -43,23 +51,30 @@ describe TripsController do
 
   describe "create" do
 
-    let (:kendrick_jr) {
-      Driver.create(name: "Kendrick Marks Jr")
-    }
+    it "can create a trip" do
 
-    it "can create a book" do
-      trip_hash = {
-        trip: {
-          driver_id: mark_marks.id,
-          passenger_id: michelle_obama.id,
-          date: "2021-01-20",
-          rating: "4",
-          cost: "4000",
+      let (:mark_marks) {
+        Driver.create(name: "Mark Marks")
+      }
+
+      let (:michelle_obama) {
+        Passenger.create(name: "Michelle Obama")
+      }
+
+      let (:new_trip_hash) {
+        {
+          trip: {
+            driver_id: mark_marks.id,
+            passenger_id: michelle_obama.id,
+            date: "2021-01-20",
+            rating: "4",
+            cost: "4000",
+          },
         }
       }
 
       expect {
-        post trips_path, params: trip_hash
+        post trips_path, params: new_trip_hash
       }.must_differ 'Trip.count', 1
 
       must_respond_with :redirect
@@ -196,7 +211,7 @@ describe TripsController do
       must_respond_with :redirect
 
       trip = Trip.find_by(id: id)
-      expect(trip.driver_id).must_equal new_trip_hash[:trip][:driver_id]
+      expect(trip.driver_id).must_equal new_trip_hash[:trip][:driver_id].to_s
       expect(trip.passenger_id.name).must_equal new_trip_hash michelle_obama.name
       expect(trip.date).must_equal new_trip_hash[:trip][:date]
       expect(trip.rating).must_equal new_trip_hash[:trip][:rating]

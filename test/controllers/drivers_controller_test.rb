@@ -8,7 +8,6 @@
 # end
 # random_license_plate(17) # the ones in the csv file are 17 characters
 
-
 require "test_helper"
 
 describe DriversController do
@@ -21,10 +20,11 @@ describe DriversController do
       Driver.create(name: "Kendrick Marks Jr", vin: "456", available: "false")
 
       # Ensure that there is at least one Driver saved
-
+      expect(Driver.all).wont_be_empty
+      expect(Driver.all).wont_be_nil
 
       # Act
-      get "/drivers/"
+      get drivers_path
 
       # Assert
       must_respond_with :success
@@ -34,10 +34,12 @@ describe DriversController do
     it "responds with success when there are no drivers saved" do
       # Arrange
       # Ensure that there are zero drivers saved
+      Driver.destroy_all
+      expect(Driver.all.length).must_equal 0
 
 
       # Act
-      get "/drivers/"
+      get drivers_path
 
       # Assert
       must_respond_with :success
@@ -80,7 +82,7 @@ describe DriversController do
   describe "new" do
     it "responds with success" do
 
-      get new_task_path
+      get new_driver_path
 
       must_respond_with :success
 
@@ -192,7 +194,7 @@ describe DriversController do
       Passenger.create(name: "Michelle Obama")
     }
 
-    let (:new_trip_hash) {
+    let (:new_driver_hash) {
       {
         trip: {
           driver_id: mark_marks.id,
