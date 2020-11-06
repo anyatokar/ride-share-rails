@@ -41,7 +41,7 @@ describe PassengersController do
       valid_passenger_id = @passenger.id
 
       # Act
-      get passengers_path(valid_passenger_id)
+      get passenger_path(valid_passenger_id)
 
       # Assert
       must_respond_with :success
@@ -54,7 +54,7 @@ describe PassengersController do
 
       expect(Passenger.find_by(id: invalid_passenger_id)).must_be_nil
       # Act
-      get passengers_path(invalid_passenger_id)
+      get passenger_path(invalid_passenger_id)
 
       # Assert
       must_respond_with :not_found
@@ -73,30 +73,31 @@ describe PassengersController do
   end
 
   describe "create" do
-    let (:new_passenger_hash) {
-      {
+    before do
+      Passenger.destroy_all
+      @new_passenger_hash = {
         passenger: {
-          name: "Mark Marks",
-          phone_num: "837-038-3945",
-        },
+          name: "Kendrick Marks Jr",
+          phone_num: "567-456-4567"
+        }
       }
-    }
+    end
     it "can create a new passenger with valid information accurately, and redirect" do
 
       # Arrange
       # Set up the form data -- in let block
       # Act-Assert
       expect {
-        post passenger_path, params: new_passenger_hash
+        post passengers_path, params: @new_passenger_hash
       }.must_differ 'Passenger.count', 1
 
       # Assert
-      expect(Passenger.last.name).must_equal new_passenger_hash[:passenger][:name]
-      expect(Passenger.last.phone_num).must_equal new_passenger_hash[:passenger][:phone_num]
+      expect(Passenger.last.name).must_equal @new_passenger_hash[:passenger][:name]
+      expect(Passenger.last.phone_num).must_equal @new_passenger_hash[:passenger][:phone_num]
       # Check that the controller redirected the user
-      new_passenger_id = Passenger.last.id
+      new_passenger_id = Passenger.find_by(name: "Kendrick Marks Jr").id
       must_respond_with :redirect
-      must_redirect_to "/passengers/#{new_passenger_id}" #TODO
+      must_redirect_to passenger_path(new_passenger_id)
     end
 
     it "does not create a passenger if the form data violates Passenger validations, and responds with a redirect" do
@@ -115,7 +116,7 @@ describe PassengersController do
       valid_passenger_id = @passenger.id
 
       # Act
-      get passengers_path(valid_passenger_id)
+      get edit_passenger_path(valid_passenger_id)
 
       # Assert
       must_respond_with :success
@@ -128,7 +129,7 @@ describe PassengersController do
       expect(Passenger.find_by(id: invalid_passenger_id)).must_be_nil
 
       # Act
-      get passengers_path(invalid_passenger_id)
+      get edit_passenger_path(invalid_passenger_id)
 
       # Assert
       must_respond_with :not_found
@@ -138,38 +139,36 @@ describe PassengersController do
 
   describe "update" do
     before do
-      Passenger.create(
-        name: "Kendrick Marks Jr",
-        phone_num: "937-389-3894"
-      )
+      @new_passenger_hash = {
+        passenger: {
+          name: "Kendrick Marks Jr",
+          phone_num: "567-456-4567"
+        }
+      }
+
+    Passenger.create(name: "Mark Marks")
     end
 
-    let (:new_passenger_hash) {
-      {
-        passenger: {
-          name: "Mark Marks",
-          phone_num: "765-987-3948",
-        },
-      }
-    }
+
     it "can update an existing passenger with valid information accurately, and redirect" do
       # Arrange
-      valid_passenger_id = Passenger.last.id
+      valid_passenger_id = Passenger.find_by(name: "Mark Marks").id
 
       expect {
-        patch passenger_path(valid_passenger_id), params: new_passenger_hash
+        patch passenger_path(valid_passenger_id), params: @new_passenger_hash
       }.wont_change "Passenger.count"
 
-      patch passenger_path(valid_passenger_id), params: new_passenger_hash
+      # patch passenger_path(valid_passenger_id), params: @new_passenger_hash
 
       # Assert
 
       passenger = Passenger.find_by(id: valid_passenger_id)
-      expect(passenger.name).must_equal new_passenger_hash[:passenger][:name]
-      expect(passenger.phone_num).must_equal new_passenger_hash[:passenger][:phone_num]
+      expect(passenger.name).must_equal @new_passenger_hash[:passenger][:name]
+      expect(passenger.phone_num).must_equal @new_passenger_hash[:passenger][:phone_num]
 
       # Check that the controller redirected the user
       must_respond_with :redirect
+      must_redirect_to passenger_path(valid_passenger_id)
     end
 
     it "does not update any passenger if given an invalid id, and responds with a 404" do
@@ -182,8 +181,9 @@ describe PassengersController do
       # Set up the form data - in let block
 
       # Act-Assert
-      expect(patch passenger_path(invalid_passenger_id), params: new_passenger_hash
-      ).wont_change "Passenger.count"
+      expect{
+        patch passenger_path(invalid_passenger_id), params: @new_passenger_hash
+      }.wont_change "Passenger.count"
 
       # Assert
       # Check that the controller gave back a 404
@@ -197,17 +197,18 @@ describe PassengersController do
 
   describe "destroy" do
     before do
-      Passenger.create(name: "Kendrick Marks Jr",
+      Driver.destroy_all
+      @passenger = Passenger.create(name: "Kendrick Marks Jr",
                        phone_num: "293-342-3948")
     end
 
     it "destroys the passenger instance in db when passenger exists, then redirects" do
       # Arrange
-      passenger = Passenger.last
-      valid_passenger_id = passenger.id
-
+      # Ensure there is an existing passenger saved
+      # passenger = Passenger.last
+      valid_passenger_id = Passenger.find_by(name: "Kendrick Marks Jr").id
       # Act-Assert
-      # Ensure that there is a change of -1 in Passneger.count
+      # Ensure that there is a change of -1 in Passenger.count
 
       expect {
         delete passenger_path(valid_passenger_id)
@@ -228,8 +229,8 @@ describe PassengersController do
 
       # Act-Assert
       # Ensure that there is no change in Passenger.count
-      expect {
-        patch passenger_path(invalid_passenger_id)
+      expect{
+        delete passenger_path(invalid_passenger_id)
       }.wont_change "Passenger.count"
 
       # Assert
@@ -238,5 +239,4 @@ describe PassengersController do
     end
   end
 end
-require "test_helper"
 
