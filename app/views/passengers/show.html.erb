@@ -12,8 +12,8 @@
   <li><%= button_to "Delete", passenger_path(@passenger), :class => "button", method: :delete, data: {confirm: "Are you sure?"}%></li>
   <br><br>
   <h3>Trips</h3>
-  <% if @passenger.trips.nil? %>
-    <p><%= "#{@passenger.name} does not have any trips in the system." %></p>
+  <% if @passenger.trips.length == 0 %>
+    <p><i><%= "#{@passenger.name} does not have any trips in the system yet!" %></i></p>
   <% else %>
   <table>
     <tr>

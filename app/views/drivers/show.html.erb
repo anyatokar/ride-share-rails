@@ -15,6 +15,9 @@
   <li><%= button_to "Delete", driver_path(@driver), :class => "button", method: :delete, data: {confirm: "Are you sure?"}%></li>
   <br><br>
   <h3>Trips</h3>
+  <% if @driver.trips.length == 0 %>
+    <p><i><%= "#{@driver.name} does not have any trips in the system yet!" %></i></p>
+  <% else %>
   <table>
     <tr>
       <th>Trip ID</th>
@@ -33,6 +36,7 @@
       </tr>
     <% end %>
   </table>
+  <% end %>
 </div>
 <!--<div class="profile-spacer"></div>-->
 <!--<p><%#= link_to "Return to Book List", books_path %></p> -->
