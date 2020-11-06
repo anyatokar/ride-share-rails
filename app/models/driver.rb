@@ -1,6 +1,10 @@
 class Driver < ApplicationRecord
   has_many :trips
 
+  validates :name, presence: true
+  validates :vin, presence: true, length: { is: 17 }
+  validates :available, inclusion: { in: ["true", "false"] }
+
   def average_rating
     nil_counter = 0
     rating_sum = self.trips.inject(0) do |sum, trip|

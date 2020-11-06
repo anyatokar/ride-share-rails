@@ -1,3 +1,14 @@
+<% if @driver.errors.any? %>
+  <p class="errors">
+    <i>Please adjust the following and try again!</i>
+    <br>
+    <% @driver.errors.each do |column, message| %>
+      <strong>- <%= column.capitalize %></strong> <%= message %>
+      <br>
+    <% end %>
+  </p>
+<% end %>
+
 <%= form_with model: @driver, class: 'create-driver' do |f| %>
   <h4><%= f.label "Drivers >> #{action_name}" %></h4>
 <!--  <p>Please provide the following information to edit your data in our database:</p>-->
