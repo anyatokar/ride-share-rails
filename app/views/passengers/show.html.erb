@@ -20,15 +20,15 @@
       <th>Trip ID</th>
       <th>Date</th>
       <th>Driver</th>
-      <th>Rating</th>
       <th>Cost</th>
+      <th>Rating</th>
     </tr>
       <% @passenger.trips.each do |trip| %>
       <tr>
         <td><%= link_to trip.id, trip_path(trip.id) %></td>
         <td><%= trip.date %></td>
         <td><%= link_to trip.driver.name, driver_path(trip.driver.id) %></td>
-        <td><%= trip.cost %></td>
+        <td>$<%= trip.to_currency(trip.cost) %></td>
         <td><%= trip.rating %></td>
       </tr>
     <% end %>

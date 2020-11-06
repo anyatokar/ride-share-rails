@@ -28,7 +28,7 @@
         <td><%= link_to trip.id, trip_path(trip.id) %></td>
         <td><%= trip.date %></td>
         <td><%= link_to trip.passenger.name, passenger_path(trip.passenger.id) %></td>
-        <td><%= trip.cost %></td>
+        <td>$ <%= trip.to_currency(trip.cost) %></td>
         <td><%= trip.rating %></td>
       </tr>
     <% end %>
