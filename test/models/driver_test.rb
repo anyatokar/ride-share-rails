@@ -71,6 +71,10 @@ describe Driver do
       it "calculates average" do
         expect(new_driver.average_rating).must_equal (5 + 3) / 2
       end
+
+      it "can account for nil trips and not add them to the total trips" do
+
+      end
     end
 
     describe "total earnings" do
