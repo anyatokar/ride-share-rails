@@ -1,3 +1,14 @@
+<% if @trip.errors.any? %>
+  <p class="errors">
+    <i>Please adjust the following and try again!</i>
+    <br>
+    <% @trip.errors.each do |column, message| %>
+      <strong>- <%= column.capitalize %></strong> <%= message %>
+      <br>
+    <% end %>
+  </p>
+<% end %>
+
 <%= form_with model: @trip, class: 'edit-trip' do |f| %>
   <!--  <h4><%#= f.label "Passenger > #{action_name}" %></h4>-->
   <!--  <br>-->
