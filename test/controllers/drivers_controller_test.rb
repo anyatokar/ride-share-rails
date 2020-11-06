@@ -16,8 +16,8 @@ describe DriversController do
   describe "index" do
     it "responds with success when there are many drivers saved" do
       # Arrange
-      Driver.create(name: "Kari", vin: "123", available: "true")
-      Driver.create(name: "Kendrick Marks Jr", vin: "456", available: "false")
+      Driver.create(name: "Kari", vin: "IHNXZOJKN4H52RI3Z", available: "true")
+      Driver.create(name: "Kendrick Marks Jr", vin: "JDO9OQL7AWDLZ1AY6", available: "false")
 
       # Ensure that there is at least one Driver saved
       expect(Driver.all).wont_be_empty
@@ -36,7 +36,6 @@ describe DriversController do
       # Ensure that there are zero drivers saved
       Driver.destroy_all
       expect(Driver.all.length).must_equal 0
-
 
       # Act
       get drivers_path
@@ -71,7 +70,7 @@ describe DriversController do
       # Ensure that there is an id that points to no driver
       expect(Driver.find_by(id: invalid_driver_id)).must_be_nil
       # Act
-      get"/drivers/#{invalid_driver_id}"
+      get"drivers_path/#{invalid_driver_id}"
 
       # Assert
       must_respond_with :not_found
@@ -90,6 +89,16 @@ describe DriversController do
   end
 
   describe "create" do
+    begin do
+    driver_hash = {
+      driver: {
+        name: "Kendrick Marks Jr",
+        vin: "EMX66UMNBYNHH790R",
+        available: "false"
+      }
+    }
+    end
+
     let (:driver) {
       Driver.create(name: "Kendrick Marks Jr")
     }
@@ -97,13 +106,7 @@ describe DriversController do
 
       # Arrange
       # Set up the form data
-      driver_hash = {
-        driver: {
-          name: "Kendrick Marks Jr",
-          vin: "EMX66UMNBYNHH790R",
-          available: "false"
-        }
-      }
+
       new_driver_id = Driver.last.id
       # Act-Assert
       # Ensure that there is a change of 1 in Driver.count
@@ -119,7 +122,6 @@ describe DriversController do
       # Check that the controller redirected the user
       must_respond_with :redirect
       must_redirect_to "/drivers/#{new_driver_id}"
-
     end
 
     it "does not create a driver if the form data violates Driver validations, and responds with a redirect" do
