@@ -16,11 +16,11 @@ describe DriversController do
   describe "index" do
     it "responds with success when there are many drivers saved" do
       # Arrange
-      Driver.create(name: "Kari", vin: "123", available: true)
-      Driver.create(name: "Kendrick Marks Jr", vin: "456", available: false)
+      Driver.create(name: "Kari", vin: "123", available: "true")
+      Driver.create(name: "Kendrick Marks Jr", vin: "456", available: "false")
 
       # Ensure that there is at least one Driver saved
-      expect(Driver.count).must_equal 2
+
 
       # Act
       get "/drivers/"
@@ -33,7 +33,7 @@ describe DriversController do
     it "responds with success when there are no drivers saved" do
       # Arrange
       # Ensure that there are zero drivers saved
-      expect(Driver.count).must_equal 0
+
 
       # Act
       get "/drivers/"
@@ -46,12 +46,12 @@ describe DriversController do
 
   describe "show" do
     before do
-      @driver = Driver.create(name: "Kendrick Marks Jr", vin: "456", available: false)
+      @driver = Driver.create(name: "Kendrick Marks Jr", vin: "456", available: "false")
     end
     it "responds with success when showing an existing valid driver" do
       # Arrange
       # Ensure that there is a driver saved
-      expect(Driver.count).must_equal 1
+
       valid_driver_id = @driver.id
 
       # Act
@@ -79,7 +79,7 @@ describe DriversController do
   describe "new" do
     it "responds with success" do
 
-      get new_task_path
+      get new_driver_path
 
       must_respond_with :success
 
@@ -98,7 +98,7 @@ describe DriversController do
         driver: {
           name: "Kendrick Marks Jr",
           vin: "EMX66UMNBYNHH790R",
-          available: false
+          available: "false"
         }
       }
       new_driver_id = Driver.last.id
@@ -131,15 +131,15 @@ describe DriversController do
       # Check that the controller redirects
     end
   end
-  
+
   describe "edit" do
     before do
-      @driver = Driver.create(name: "Kendrick Marks Jr", vin: "456", available: false)
+      @driver = Driver.create(name: "Kendrick Marks Jr", vin: "456", available: "false")
     end
 
     it "responds with success when getting the edit page for an existing, valid driver" do
       # Arrange
-      expect(Driver.count).must_equal 1
+
       valid_driver_id = @driver.id
       # Ensure there is an existing driver saved
 
@@ -206,7 +206,7 @@ describe DriversController do
     it "can update an existing driver with valid information accurately, and redirect" do
       # Arrange
       # Ensure there is an existing driver saved
-      expect(Driver.count).must_equal 1
+
 
       # Assign the existing driver's id to a local variable
       valid_driver_id = Trip.last.driver_id
@@ -241,7 +241,7 @@ describe DriversController do
       # Act-Assert
       # Ensure that there is no change in Driver.count
       expect {
-        patch driver_path(id), params: new_driver_hash
+        patch driver_path(invalid_driver_id), params: new_driver_hash
       }.wont_change "Driver.count"
 
       # Assert
@@ -283,15 +283,15 @@ describe DriversController do
     }
     it "destroys the driver instance in db when driver exists, then redirects" do
       # Arrange
-      expect(Driver.count).must_equal 1
       # Ensure there is an existing driver saved
-      valid_driver_id = Trip.last.driver_id
+      driver = Driver.last
+      valid_driver_id = driver.id
 
       # Act-Assert
       # Ensure that there is a change of -1 in Driver.count
 
       expect {
-        delete driver_path(id), params: new_driver_hash
+        delete driver_path(valid_driver_id)
       }.must_change "Driver.count", -1
 
       # Assert
@@ -310,7 +310,7 @@ describe DriversController do
       # Act-Assert
       # Ensure that there is no change in Driver.count
       expect {
-        patch driver_path(id), params: new_driver_hash
+        patch driver_path(invalid_driver_id)
       }.wont_change "Driver.count"
 
       # Assert

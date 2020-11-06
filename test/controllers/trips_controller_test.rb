@@ -4,7 +4,7 @@ describe TripsController do
 
   describe "index" do
     it "should get index" do
-      get "/trip"
+      get "/trips/"
       must_respond_with :success
     end
   end
@@ -43,11 +43,15 @@ describe TripsController do
 
   describe "create" do
 
-    let (:kendrick_jr) {
-      Driver.create(name: "Kendrick Marks Jr")
+    let (:mark_marks) {
+      Driver.create(name: "Mark Marks")
     }
 
-    it "can create a book" do
+    let (:michelle_obama) {
+      Passenger.create(name: "Michelle Obama")
+    }
+
+    it "can create a trip" do
       trip_hash = {
         trip: {
           driver_id: mark_marks.id,
@@ -78,7 +82,6 @@ describe TripsController do
       # TODO fill this in when we implement validations next week
     end
   end
-
 
   describe "edit" do
     before do
@@ -123,7 +126,7 @@ describe TripsController do
       valid_id = Trip.last.id
 
       # Act
-      get edit_task_path(valid_id)
+      get edit_trip_path(valid_id)
 
       # Assert
       expect {
@@ -139,7 +142,7 @@ describe TripsController do
       invalid_id = -1
 
       # Act
-      get edit_task_path(invalid_id)
+      get edit_trip_path(invalid_id)
 
       # Assert
       must_respond_with :redirect
