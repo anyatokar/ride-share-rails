@@ -10,6 +10,7 @@
 <!--  <h2>Vin: <%#= @driver.vin %></h2>-->
 <!--  <h2>Driver Available? <%#= @driver.id %></h2>-->
   <h4><strong>Average Rating:</strong> <%= @driver.average_rating %> </h4>
+  <h4><strong>Total Earnings:</strong> $<%= @driver.total_earnings %> </h4>
   <li><%= button_to "Edit", edit_driver_path(@driver), :class => "button", method: :get %></li>
   <li><%= button_to "Delete", driver_path(@driver), :class => "button", method: :delete, data: {confirm: "Are you sure?"}%></li>
   <br><br>
@@ -27,7 +28,7 @@
         <td><%= link_to trip.id, trip_path(trip.id) %></td>
         <td><%= trip.date %></td>
         <td><%= link_to trip.passenger.name, passenger_path(trip.passenger.id) %></td>
-        <td><%= trip.cost %></td>
+        <td>$<%= trip.to_currency %></td>
         <td><%= trip.rating %></td>
       </tr>
     <% end %>
