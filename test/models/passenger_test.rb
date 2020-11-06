@@ -24,9 +24,9 @@ describe Passenger do
     it "can have many trips" do
       # Arrange
       new_passenger.save
-      new_driver = Driver.create(name: "Waldo", vin: "ALWSS52P9NEYLVDE9")
-      trip_1 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 1234)
-      trip_2 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 6334)
+      new_driver = Driver.create!(name: "Waldo", vin: "ALWSS52P9NEYLVDE9", available: "true")
+      trip_1 = Trip.create!(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 1234)
+      trip_2 = Trip.create!(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 6334)
 
       # Assert
       expect(new_passenger.trips.count).must_equal 2

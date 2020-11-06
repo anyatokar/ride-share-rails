@@ -19,11 +19,11 @@ describe TripsController do
     end
 
       let (:kendrick_jr) {
-        Driver.create(name: "Kendrick Marks Jr")
+        Driver.create(name: "Kendrick Marks Jr", vin: "BZ7DZZM8H4O2PC34Q", available: "true")
       }
 
       let (:joe_biden) {
-        Passenger.create(name: "Joe Biden")
+        Passenger.create(name: "Kendrick Marks Jr", phone_num: "234-586-4956")
       }
 
     it "will get show for valid ids" do
@@ -50,48 +50,49 @@ describe TripsController do
   end
 
   describe "create" do
+    before do
+    @new_trip_hash = {
+      trip: {
+        driver_id: kendrick_jr.id,
+        passenger_id: michelle_obama.id,
+        date: "2020-11-04",
+        rating: "5",
+        cost: "5000"
+      }
+    }
+    end
 
     let (:kendrick_jr) {
-      Driver.create(name: "Kendrick Marks Jr")
+      Driver.create!(name: "Kendrick Marks Jr", vin: "BZ7DZZM8H4O2PC34Q", available: "true")
     }
 
     let (:michelle_obama) {
-      Passenger.create(name: "Michelle Obama")
+      Passenger.create!(name: "Kendrick Marks Jr", phone_num: "234-586-4956")
     }
 
     it "can create a trip" do
-      Trip.destroy_all
-      @new_trip_hash = {
-        trip: {
-          driver_id: kendrick_jr.id,
-          passenger_id: michelle_obama.id,
-          date: "2020-11-04",
-          rating: "5",
-          cost: "5000"
-        }
-      }
-
+      kendrick_jr
       expect {
-        post trips_path, params: @new_trip_hash
+        post passenger_trips_path(michelle_obama.id)
       }.must_differ 'Trip.count', 1
 
       must_respond_with :redirect
-      must_redirect_to root_path
+      must_redirect_to trip_path(Trip.last)
 
-      expect(Trip.last.driver_id).must_equal @new_trip_hash[:trip][:driver_id]
-      expect(Trip.last.driver_id.name).must_equal kendrick_jr.name
-      expect(Trip.last.passenger_id).must_equal @new_trip_hash[:trip][:passenger_id]
-      expect(Trip.last.passenger_id.name).must_equal michelle_obama.name
-      expect(Trip.last.date).must_equal @new_trip_hash[:trip][:date]
-      expect(Trip.last.rating).must_equal @new_trip_hash[:trip][:rating]
-      expect(Trip.last.cost).must_equal @new_trip_hash[:trip][:cost]
+      expect(Trip.last.driver_id).must_equal kendrick_jr.id.to_s
+      expect(Trip.last.driver.name).must_equal kendrick_jr.name
+      expect(Trip.last.passenger_id).must_equal michelle_obama.id.to_s
+      expect(Trip.last.passenger.name).must_equal michelle_obama.name
+      Date.parse(Trip.last.date)
+      expect(Trip.last.rating).must_be_nil
+      expect(Trip.last.cost.to_i >= 1).must_equal true
+      expect(Trip.last.cost.to_i <= 5000).must_equal true
     end
 
     it "will not create a trip with invalid params" do
       # TODO fill this in when we implement validations next week
     end
   end
-
 
   describe "edit" do
     before do
@@ -103,19 +104,19 @@ describe TripsController do
     end
 
     let (:kendrick_jr) {
-      Driver.create(name: "Kendrick Marks Jr") # TODO need more clarity on let
+      Driver.create(name: "Kendrick Marks Jr", vin: "BZ7DZZM8H4O2PC34Q", available: "true")
     }
 
     let (:joe_biden) {
-      Passenger.create(name: "Joe Biden")
+      Passenger.create(name: "Joe Biden",  phone_num: "234-586-4956")
     }
 
     let (:mark_marks) {
-      Driver.create(name: "Mark Marks")
+      Driver.create(name: "Mark Marks", vin: "B97DZZM8H4O2PC34Q", available: "true")
     }
 
     let (:michelle_obama) {
-      Passenger.create(name: "Michelle Obama")
+      Passenger.create(name: "Michelle Obama", phone_num: "234-086-4956")
     }
 
     let (:new_trip_hash) {
@@ -174,19 +175,19 @@ describe TripsController do
     end
 
     let (:kendrick_jr) {
-      Driver.create(name: "Kendrick Marks Jr")
+      Driver.create(name: "Kendrick Marks Jr", vin: "BZ7DZZM8H4O2PC34Q", available: "true")
     }
 
     let (:joe_biden) {
-      Passenger.create(name: "Joe Biden")
+      Passenger.create(name: "Joe Biden",  phone_num: "234-586-4956")
     }
 
     let (:mark_marks) {
-      Driver.create(name: "Mark Marks")
+      Driver.create(name: "Mark Marks", vin: "B97DZZM8H4O2PC34Q", available: "true")
     }
 
     let (:michelle_obama) {
-      Passenger.create(name: "Michelle Obama")
+      Passenger.create(name: "Michelle Obama", phone_num: "234-086-4956")
     }
 
     let (:new_trip_hash) {
@@ -200,6 +201,7 @@ describe TripsController do
         },
       }
     }
+
     it "will update a model with a valid post request" do
       id = Trip.first.id
       expect {
@@ -228,6 +230,7 @@ describe TripsController do
 
     it "will not update if the params are invalid" do
       # TODO This test will be examined when we cover validations next week
+
     end
   end
 
