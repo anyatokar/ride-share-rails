@@ -7,7 +7,7 @@ class DriversController < ApplicationController
     driver_id = params[:id]
     @driver = Driver.find_by(id: driver_id)
     if @driver.nil?
-      head :not_found
+      redirect_to drivers_path, alert: "Driver not found"
       return
     end
   end
@@ -31,7 +31,8 @@ class DriversController < ApplicationController
     @driver = Driver.find_by(id: params[:id])
 
     if @driver.nil?
-      head :not_found
+      # head :not_found
+      redirect_to drivers_path, alert: "Driver not found"
       return
     end
   end
@@ -39,7 +40,8 @@ class DriversController < ApplicationController
   def update
     @driver = Driver.find_by(id: params[:id])
     if @driver.nil?
-      head :not_found
+      # head :not_found
+      redirect_to drivers_path, notice: "Driver not found"
       return
     elsif @driver.update(driver_params)
       redirect_to driver_path(@driver) # go to the index so we can see the book in the list
@@ -47,6 +49,19 @@ class DriversController < ApplicationController
     else # save failed :(
     render :edit # show the new book form view again
     return
+    end
+  end
+
+  def destroy
+    @driver = Driver.find_by(id: params[:id])
+
+    if @driver.nil?
+      head :not_found
+      return
+    else
+      @driver.destroy
+      redirect_to root_path
+      return
     end
   end
 

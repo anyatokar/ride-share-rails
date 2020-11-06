@@ -5,16 +5,19 @@
   </div>
   <br>
   <h4><strong>VIN:</strong> <%= @driver.vin.upcase %> </h4>
-  <h4><strong>Status:</strong> <%= @driver.available ? "Available" : "Unavailable" %> </h4>
+  <h4><strong>Status:</strong> <%= ActiveModel::Type::Boolean.new.cast(@driver.available) ? "Available" : "Unavailable" %> </h4>
 <!--  <h2>Driver ID: <%#= @driver.id %></h2>-->
 <!--  <h2>Vin: <%#= @driver.vin %></h2>-->
 <!--  <h2>Driver Available? <%#= @driver.id %></h2>-->
   <h4><strong>Average Rating:</strong> <%= @driver.average_rating %> </h4>
-  <h4><strong>Total Earnings:</strong> $<%= @driver.total_earnings %> </h4>
+  <h4><strong>Total Earnings:</strong> $<%= @driver.to_currency(@driver.total_earnings) %> </h4>
   <li><%= button_to "Edit", edit_driver_path(@driver), :class => "button", method: :get %></li>
   <li><%= button_to "Delete", driver_path(@driver), :class => "button", method: :delete, data: {confirm: "Are you sure?"}%></li>
   <br><br>
   <h3>Trips</h3>
+  <% if @driver.trips.length == 0 %>
+    <p><i><%= "#{@driver.name} does not have any trips in the system yet!" %></i></p>
+  <% else %>
   <table>
     <tr>
       <th>Trip ID</th>
@@ -28,11 +31,12 @@
         <td><%= link_to trip.id, trip_path(trip.id) %></td>
         <td><%= trip.date %></td>
         <td><%= link_to trip.passenger.name, passenger_path(trip.passenger.id) %></td>
-        <td>$<%= trip.to_currency %></td>
+        <td>$ <%= trip.to_currency(trip.cost) %></td>
         <td><%= trip.rating %></td>
       </tr>
     <% end %>
   </table>
+  <% end %>
 </div>
 <!--<div class="profile-spacer"></div>-->
 <!--<p><%#= link_to "Return to Book List", books_path %></p> -->

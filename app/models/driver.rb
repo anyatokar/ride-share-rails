@@ -26,7 +26,13 @@ class Driver < ApplicationRecord
         sum + trip.cost.to_f - 1.65 * 100
       end
     end
-    return (net_fee / 100 * 0.8).round(2)
+    # return (net_fee / 100 * 0.8).round(2)
+    return net_fee
+  end
+
+  def to_currency(amount)
+    currency = amount.to_i/(100.0).round(2)
+    return currency
   end
 end
 

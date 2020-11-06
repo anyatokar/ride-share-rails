@@ -42,11 +42,24 @@ class PassengersController < ApplicationController
       head :not_found
       return
     elsif @passenger.update(passenger_params)
-      redirect_to passenger_path(@passenger) # go to the index so we can see the book in the list
+      redirect_to passenger_path(@passenger)
       return
-    else # save failed :(
-    render :edit # show the new book form view again
+    else
+    render :edit
     return
+    end
+  end
+
+  def destroy
+    @passenger = Passenger.find_by(id: params[:id])
+
+    if @passenger.nil?
+      head :not_found
+      return
+    else
+      @passenger.destroy
+      redirect_to root_path
+      return
     end
   end
 

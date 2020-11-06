@@ -1,24 +1,29 @@
-<h1>Trips</h1>
+<h1>RideShare Trip Log</h1>
+
+<div class="pagination">
+  <%= will_paginate @trips %>
+  <br>
+</div>
+
 <% if @trips.length > 0 %>
   <table>
     <tr>
       <th>Trip</th>
       <th>Driver</th>
       <th>Passenger</th>
-      <th>Cost</th>
       <th>Rating</th>
+      <th>Cost</th>
     </tr>
     <% @trips.each do |trip| %>
       <tr>
-        <td><%= trip.id %></td>
-        <td><%= trip.driver.name %></td>
-        <td><%= trip.passenger.name %></td>
-        <td><%= trip.cost %></td>
+        <td><%= link_to trip.id, trip_path(trip.id)%></td>
+        <td><%= link_to trip.driver.name, driver_path(trip.driver.id)%></td>
+        <td><%= link_to trip.passenger.name, passenger_path(trip.passenger.id)%></td>
+        <td>$<%= trip.to_currency(trip.cost) %></td>
         <td><%= trip.rating %></td>
-
       </tr>
     <% end %>
   </table>
 <% else %>
-  <p>No passengers in the system!</p>
+  <p>No trips in the system!</p>
 <% end %>

@@ -48,33 +48,32 @@ describe DriversController do
 
   describe "show" do
     before do
-      @driver = Driver.create(name: "Kendrick Marks Jr", vin: "YUJ9KT8HTOL8WX8NM", available: "false")
+      @driver = Driver.create(name: "Kendrick Marks Jr", vin: "456", available: "false")
     end
     it "responds with success when showing an existing valid driver" do
       # Arrange
       # Ensure that there is a driver saved
+
       valid_driver_id = @driver.id
 
       # Act
-      # get "/drivers/#{valid_driver_id}"
-      get drivers_path(valid_driver_id)
+      get "/drivers/#{valid_driver_id}"
 
       # Assert
       must_respond_with :success
 
     end
 
-    it "responds with 404 with an invalid driver id" do
+    it "will redirect for an invalid driver id" do
+
       # Arrange
       invalid_driver_id = -1
-      # Ensure that there is an id that points to no driver
-      expect(Driver.find_by(id: invalid_driver_id)).must_be_nil
+
       # Act
-      get drivers_path(invalid_driver_id)
+      get driver_path(invalid_driver_id)
 
       # Assert
-      must_respond_with :not_found
-
+      must_respond_with :redirect
     end
   end
 
@@ -89,35 +88,44 @@ describe DriversController do
   end
 
   describe "create" do
-    let (:new_driver_hash) {
-      {
+    before do
+      @driver_hash = {
         driver: {
-          name: "Mark Marks",
-          vin: "YUJ9KT8HTOL8WX8NM",
-          available: "true",
-        },
+          name: "Kendrick Marks Jr",
+          vin: "EMX66UMNBYNHH790R",
+          available: "false"
+        }
       }
-    }
+
+      @driver = Driver.create(name: "Kendrick Marks Jr")
+    end
+
+
+    # let (:driver) {
+    #   Driver.create(name: "Kendrick Marks Jr")
+    # }
     it "can create a new driver with valid information accurately, and redirect" do
 
       # Arrange
-      # Set up the form data -- in let block
+      # Set up the form data
+
+      # what ar you trying to do here? create a driver?
+      new_driver_id = @driver.id
+
       # Act-Assert
       # Ensure that there is a change of 1 in Driver.count
       expect {
-        post drivers_path, params: new_driver_hash
+        post drivers_path, params: @driver_hash
       }.must_differ 'Driver.count', 1
 
       # Assert
       # Find the newly created Driver, and check that all its attributes match what was given in the form data
-      expect(Driver.last.name).must_equal new_driver_hash[:driver][:name]
-      expect(Driver.last.vin).must_equal new_driver_hash[:driver][:vin]
-      expect(Driver.last.available).must_equal new_driver_hash[:driver][:available]
+      expect(Driver.last.name).must_equal @driver_hash[:driver][:name]
+      expect(Driver.last.vin).must_equal @driver_hash[:driver][:vin]
+      expect(Driver.last.available).must_equal @driver_hash[:driver][:available]
       # Check that the controller redirected the user
-      new_driver_id = Driver.last.id
       must_respond_with :redirect
-      must_redirect_to "/drivers/#{new_driver_id}" #TODO what's the syntax for using paths here? drivers_path(new_driver_id) it's not this..
-      # must_redirect_to drivers_path(new_driver_id)
+      # must_redirect_to "/drivers/#{new_driver_id}" this would've gone to the incorrect driver, the former one, did you mean the 2nd?
     end
 
     it "does not create a driver if the form data violates Driver validations, and responds with a redirect" do
@@ -132,7 +140,7 @@ describe DriversController do
       # Check that the controller redirects
     end
   end
-  
+
   describe "edit" do
     before do
       @driver = Driver.create(name: "Kendrick Marks Jr", vin: "456", available: "false")
@@ -159,78 +167,117 @@ describe DriversController do
       expect(Driver.find_by(id: invalid_driver_id)).must_be_nil
 
       # Act
-      get "/drivers/#{invalid_driver_id}"
+      get edit_driver_path(invalid_driver_id)
 
       # Assert
-      must_respond_with :not_found
+      must_respond_with :redirect
 
     end
   end
 
   describe "update" do
     before do
-      Driver.create(
-          name: "Kendrick Marks Jr",
-          vin: "EMX66UMPBYNHH790R",
-          available: "false"
-      )
-    end
-
-    let (:new_driver_hash) {
-      {
-        driver: {
-          name: "Mark Marks",
-          vin: "EMX67UMPBYNHH790R",
-          available: "true",
-        },
+      @new_driver_hash = {
+        driver_id: 1,
+        passenger_id: 1,
+        date: "2021-01-20",
+        rating: "4",
+        cost: "4000",
       }
-    }
-    it "can update an existing driver with valid information accurately, and redirect" do
-      # Arrange
-      # Ensure there is an existing driver saved
-
-
-      # Assign the existing driver's id to a local variable
-      valid_driver_id = Driver.last.id
-
-      # Ensure that there is no change in Driver.count
-      # expect(Driver.find_by(id: valid_driver_id)).must_equal 1
-      expect {
-        patch driver_path(valid_driver_id), params: new_driver_hash
-      }.wont_change "Driver.count"
-
-      patch driver_path(valid_driver_id), params: new_driver_hash
-
-      # Assert
-      # Use the local variable of an existing driver's id to find the driver again, and check that its attributes are updated
-
-      driver = Driver.find_by(id: valid_driver_id)
-      expect(driver.name).must_equal new_driver_hash[:driver][:name]
-      expect(driver.vin).must_equal new_driver_hash[:driver][:vin]
-      expect(driver.available).must_equal new_driver_hash[:driver][:available]
-
-      # Check that the controller redirected the user
-      must_respond_with :redirect
     end
 
-    it "does not update any driver if given an invalid id, and responds with a 404" do
+    # Act-Assert
+
+    #TODO: did you know you're creating a trip here? Did you want to create a driver and test updating the driver instead?
+    #  # @trip = Trip.create(
+    #               driver_id: 1,
+    #               passenger_id: 1,
+    #               date: "2020-11-04",
+    #               rating: "5",
+    #               cost: "5000")
+    #
+    #   @hash = {
+    #           driver_id: mark_marks.id,
+    #           passenger_id: michelle_obama.id,
+    #           date: "2021-01-20",
+    #           rating: "4",
+    #           cost: "4000",
+    #           }
+    # end
+    #
+    # let (:kendrick_jr) {
+    #   Driver.create(name: "Kendrick Marks Jr")
+    # }
+    #
+    # let (:joe_biden) {
+    #   Passenger.create(name: "Joe Biden")
+    # }
+    #
+    # let (:mark_marks) {
+    #   Driver.create(name: "Mark Marks")
+    # }
+    #
+    # let (:michelle_obama) {
+    #   Passenger.create(name: "Michelle Obama")
+    # }
+    #
+    # let (:new_driver_hash) {
+    #   {
+    #     trip: {
+    #       driver_id: mark_marks.id,
+    #       passenger_id: michelle_obama.id,
+    #       date: "2021-01-20",
+    #       rating: "4",
+    #       cost: "4000",
+    #     },
+    #   }
+    # }
+    #
+    # it "can update an existing driver with valid information accurately, and redirect" do
+    #   # Arrange
+    #   # Ensure there is an existing driver saved
+    #
+    #
+    #   # Assign the existing driver's id to a local variable
+    #   valid_driver_id = @trip.driver_id
+    #
+    #   # Ensure that there is no change in Driver.count
+    #   # expect(Driver.find_by(id: valid_driver_id)).must_equal 1 #TODO: this is talking about a driver instance, not id
+    #   expect {
+    #     patch driver_path(valid_driver_id), params: @hash
+    #   }.wont_change "Driver.count"
+    #
+    #   # Assert
+    #   # Use the local variable of an existing driver's id to find the driver again, and check that its attributes are updated
+    #
+    #   # TODO: These are not being triggerd in the let, I would try rewriting as a before, as that fixed other tests in your suite
+    #   # driver = Trip.find_by(name: new_driver_hash[:driver][:name])
+    #   # expect(driver.name).must_equal new_driver_hash[:driver][:name]
+    #   # expect(driver.vin).must_equal new_driver_hash [:driver][:vin]
+    #   # expect(driver.available).must_equal new_driver_hash[:trip][:available]
+    #
+    #   # Check that the controller redirected the user
+    # end
+
+    it "does not update any driver if given an invalid id, and responds with a redirect" do
       # Arrange
       invalid_driver_id = -1
       # Ensure there is an invalid id that points to no driver
-
+      #
       expect(Driver.find_by(id: invalid_driver_id)).must_be_nil
 
       # Set up the form data - in let block
 
       # Act-Assert
       # Ensure that there is no change in Driver.count
+      count = Driver.count
       expect {
-        patch driver_path(invalid_driver_id), params: new_driver_hash
-      }.wont_change "Driver.count"
+        patch driver_path(invalid_driver_id), params: @new_driver_hash
+      }.wont_change count
 
       # Assert
       # Check that the controller gave back a 404
-      must_respond_with :not_found
+      must_respond_with :redirect
     end
 
     it "does not create a driver if the form data violates Driver validations, and responds with a redirect" do
@@ -251,11 +298,20 @@ describe DriversController do
 
   describe "destroy" do
     before do
-      Driver.create(name: "Kendrick Marks Jr",
-                    vin: "BZ7DZZM8H4O2PC34Q",
-                    available: "true")
+      Trip.create(driver_id: kendrick_jr.id,
+                  passenger_id: joe_biden.id,
+                  date: "2020-11-04",
+                  rating: "5",
+                  cost: "5000")
     end
 
+    let (:kendrick_jr) {
+      Driver.create(name: "Kendrick Marks Jr")
+    }
+
+    let (:joe_biden) {
+      Passenger.create(name: "Joe Biden")
+    }
     it "destroys the driver instance in db when driver exists, then redirects" do
       # Arrange
       # Ensure there is an existing driver saved
@@ -290,7 +346,8 @@ describe DriversController do
 
       # Assert
       # Check that the controller responds or redirects with whatever your group decides
-      must_respond_with :not_found
+      must_respond_with :redirect
+
     end
   end
 end

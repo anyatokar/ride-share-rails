@@ -1,6 +1,6 @@
 class TripsController < ApplicationController
   def index
-    @trips = Trip.all
+    @trips = Trip.paginate(page: params[:page]).order("id")
   end
 
   def show
@@ -26,7 +26,7 @@ class TripsController < ApplicationController
       rating: nil # set rating to nil
     )
     if @trip.save
-
+      driver_to_assign.update(available: "false")
       redirect_to trip_path(@trip.id)
     else
       render :new #TODO: alert user somehow
@@ -70,6 +70,19 @@ class TripsController < ApplicationController
     else
     render :edit
     return
+    end
+  end
+
+  def destroy
+    @trip = Trip.find_by(id: params[:id])
+
+    if @trip.nil?
+      head :not_found
+      return
+    else
+      @trip.destroy
+      redirect_to passenger_path(@trip.passenger.id)
+      return
     end
   end
 

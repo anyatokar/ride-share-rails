@@ -17,7 +17,7 @@
         <td><%= driver.id %></td>
         <td><%= link_to driver.name, driver_path(driver.id)%></td>
         <td><%= driver.vin %></td>
-        <td><%= driver.available %></td>
+        <td><%= ActiveModel::Type::Boolean.new.cast(driver.available) ? "Available" : "Unavailable" %></td>
       </tr>
     <% end %>
   </table>
