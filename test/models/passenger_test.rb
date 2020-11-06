@@ -61,7 +61,7 @@ describe Passenger do
   # Tests for methods you create should go here
   describe "custom methods" do
     describe "request a ride" do
-      # Your code here
+      # TODO what do these tests look like?
     end
 
     describe "complete trip" do

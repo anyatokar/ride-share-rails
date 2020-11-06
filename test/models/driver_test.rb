@@ -60,16 +60,27 @@ describe Driver do
 
   # Tests for methods you create should go here
   describe "custom methods" do
+    before do
+    new_driver.save
+    new_passenger = Passenger.create(name: "Kari", phone_num: "111-111-1211")
+    trip_1 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 1234)
+    trip_2 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 6334)
+    end
+
     describe "average rating" do
-      # Your code here
+      it "calculates average" do
+        expect(new_driver.average_rating).must_equal (5 + 3) / 2
+      end
     end
 
     describe "total earnings" do
-      # Your code here
+      it "sums total earnings" do
+      expect(new_driver.total_earnings).must_equal 1234 + 6334
+      end
     end
 
     describe "can go online" do
-      # Your code here
+      # TODO thinking these last 2 can go in the controller? Having trouble visulaizing these
     end
 
     describe "can go offline" do
