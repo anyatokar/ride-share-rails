@@ -161,44 +161,23 @@ describe DriversController do
       get "/drivers/#{invalid_driver_id}"
 
       # Assert
-      must_respond_with :redirect
+      # must_respond_with :redirect
+      must_respond_with :not_found
 
     end
   end
 
   describe "update" do
     before do
-      Trip.create(driver_id: kendrick_jr.id,
-                  passenger_id: joe_biden.id,
-                  date: "2020-11-04",
-                  rating: "5",
-                  cost: "5000")
+      @driver = Driver.create(name: "Kendrick Marks Jr", vin: "456", available: "false")
     end
 
-    let (:kendrick_jr) {
-      Driver.create(name: "Kendrick Marks Jr")
-    }
-
-    let (:joe_biden) {
-      Passenger.create(name: "Joe Biden")
-    }
-
-    let (:mark_marks) {
-      Driver.create(name: "Mark Marks")
-    }
-
-    let (:michelle_obama) {
-      Passenger.create(name: "Michelle Obama")
-    }
-
-    let (:new_trip_hash) {
+    let (:new_driver_hash) {
       {
-        trip: {
-          driver_id: mark_marks.id,
-          passenger_id: michelle_obama.id,
-          date: "2021-01-20",
-          rating: "4",
-          cost: "4000",
+        driver: {
+          name: "Mark Marks",
+          vin: "789",
+          available: "true",
         },
       }
     }
