@@ -1,6 +1,6 @@
 <%= form_with model: @passenger, class: 'create-passenger' do |f| %>
-<!--  <h4><%#= f.label "Passenger > #{action_name}" %></h4>-->
-<!--  <br>-->
+  <h4><%= f.label "Passengers >> #{action_name}" %></h4>
+  <br>
   <%= f.label :name %>
   <%= f.text_field :name %>
   <%= f.label :phone_num %>

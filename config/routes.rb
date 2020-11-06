@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   # TODO-- determine which RESTful routes are needed later
   resources :drivers
   resources :trips
-  resources :passengers
+  resources :passengers do
+    resources :trips, only: [:create]
+  end
   resources :homepages, only: [:index]
+
 end

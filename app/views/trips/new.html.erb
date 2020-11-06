@@ -1,0 +1,27 @@
+<!--ended up just using a button, so did not need this view-->
+
+<%#= form_with model: @trip, class: 'new-trip' do |f| %>
+<!--  <h5>Enrolled Passengers:</h5>-->
+<!--  <!--  <h4><%##= f.label "Passenger > #{action_name}" %></h4>-->-->
+<!--  <!--  <br>-->-->
+  <%#= f.label :driver_id %>
+  <%#= f.text_field :driver_id%>
+  <%#= f.label :passenger_id %>
+  <%#= f.text_field :passenger_id %>
+  <%#= f.label :cost %>
+  <%#= f.text_field :cost %>
+  <%#= f.label :rating %>
+  <%#= f.text_field :rating %>
+  <%#= f.select :driver_id, Driver.all.map{ |driver| [driver.name, driver.id] } %>
+  <%#= f.label :available %>
+  <%#= f.select :passenger_name, Passenger.all.map{ |passenger| [passenger.name] } %>
+  <%#= f.select :available, [ 'true', 'false' ], :prompt => 'Select One' %>
+  <%#= f.submit "Request!", class: "button" %>
+<%# end %>
+<!--<br><br>-->
+<!--<h5>New Passengers:</h5>-->
+<!--<div class="buttons">-->
+<!--  <li><h6>Please sign up first, then request a trip!</h6></li>-->
+<!--  <li><%#= button_to "Sign Up!", new_passenger_path,  method: :get, :class => "button" %></li>-->
+<!--</div>-->
+<!--<div class="form-spacer"></div>-->

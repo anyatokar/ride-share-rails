@@ -23,3 +23,8 @@
 <% else %>
   <p>No passengers in the system!</p>
 <% end %>
+
+<br><br>
+<div class="buttons">
+  <li><%= button_to "New Passenger", new_passenger_path, method: :get, :class => "button" %></li>
+</div>

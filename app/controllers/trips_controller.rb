@@ -12,19 +12,40 @@ class TripsController < ApplicationController
     end
   end
 
-  def new
-    @trip = Trip.new
-  end
+  # def new
+  #   @trip = Trip.new
+  # end
 
   def create
-    @trip = Trip.new(trip_params)
+    @trip = Trip.new(
+      passenger_id: params[:passenger_id],
+      driver_id: 3,
+      date: Date.today,
+      cost: rand(1..5000), # set cost to random number
+      rating: nil # set rating to nil
+    )
     if @trip.save
-      redirect_to trip_path(@trip)
-      return
+      redirect_to trip_path(@trip.id)
     else
-      render :new
+      render :new #TODO: alert user somehow
       return
     end
+    #
+    # passenger_name = params[:trip][:passenger_name]
+    # passenger = Passenger.find_by(name: passenger_name)
+    # @trip = Trip.new(
+    #   passenger_id: passenger.id,
+    #   driver_id: 3,
+    #   date: Date.today,
+    #   cost: rand(1..5000), # set cost to random number
+    #   rating: nil # set rating to nil
+    # )
+    # if @trip.save
+    #   redirect_to trip_path(@trip.id)
+    # else
+    #   render :new #TODO: alert user somehow
+    #   return
+    # end
   end
 
   def edit
@@ -41,7 +62,7 @@ class TripsController < ApplicationController
     if @trip.nil?
       head :not_found
       return
-    elsif @trip.update(trip_params)
+    elsif @trip.update(trip_edit_params)
       redirect_to trip_path(@trip)
       return
     else
@@ -51,8 +72,12 @@ class TripsController < ApplicationController
   end
 
   private
-  def trip_params
+  def trip_edit_params
     return params.require(:trip).permit(:driver_id, :passenger_id, :cost, :rating) #TODO: should all params be required - yes otherwise edit won't work but what about a new trip that's being assigned a driver- shouldn't have all required?
   end
+
+  # def trip_new_params
+  #   return params.require(:trip).permit(:passenger_id)
+  # end
 end
 

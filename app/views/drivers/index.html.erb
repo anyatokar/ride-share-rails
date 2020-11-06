@@ -24,3 +24,8 @@
 <% else %>
   <p>No drivers in the system!</p>
 <% end %>
+
+<br><br>
+<div class="buttons">
+  <li><%= button_to "New Driver", new_driver_path, method: :get, :class => "button" %></li>
+</div>
