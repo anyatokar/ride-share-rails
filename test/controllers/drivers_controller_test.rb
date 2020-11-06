@@ -251,20 +251,11 @@ describe DriversController do
 
   describe "destroy" do
     before do
-      Trip.create(driver_id: kendrick_jr.id,
-                  passenger_id: joe_biden.id,
-                  date: "2020-11-04",
-                  rating: "5",
-                  cost: "5000")
+      Driver.create(name: "Kendrick Marks Jr",
+                    vin: "BZ7DZZM8H4O2PC34Q",
+                    available: "true")
     end
 
-    let (:kendrick_jr) {
-      Driver.create(name: "Kendrick Marks Jr")
-    }
-
-    let (:joe_biden) {
-      Passenger.create(name: "Joe Biden")
-    }
     it "destroys the driver instance in db when driver exists, then redirects" do
       # Arrange
       # Ensure there is an existing driver saved
@@ -300,7 +291,6 @@ describe DriversController do
       # Assert
       # Check that the controller responds or redirects with whatever your group decides
       must_respond_with :not_found
-
     end
   end
 end

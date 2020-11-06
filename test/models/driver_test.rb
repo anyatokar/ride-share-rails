@@ -62,9 +62,9 @@ describe Driver do
   describe "custom methods" do
     before do
     new_driver.save
-    new_passenger = Passenger.create(name: "Kari", phone_num: "111-111-1211")
-    trip_1 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 1234)
-    trip_2 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 6334)
+    @new_passenger = Passenger.create(name: "Kari", phone_num: "111-111-1211")
+    trip_1 = Trip.create(driver_id: new_driver.id, passenger_id: @new_passenger.id, date: Date.today, rating: 5, cost: 1234)
+    trip_2 = Trip.create(driver_id: new_driver.id, passenger_id: @new_passenger.id, date: Date.today, rating: 3, cost: 6334)
     end
 
     describe "average rating" do
@@ -73,7 +73,8 @@ describe Driver do
       end
 
       it "can account for nil trips and not add them to the total trips" do
-
+        trip_3 = Trip.create(driver_id: new_driver.id, passenger_id: @new_passenger.id, date: Date.today, rating: nil, cost: 1234)
+        expect(new_driver.average_rating).must_be_close_to (5 + 3) / 2
       end
     end
 

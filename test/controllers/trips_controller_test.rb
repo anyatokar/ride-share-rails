@@ -31,7 +31,7 @@ describe TripsController do
       valid_trip_id = @trip.id
 
       # Act
-      get "/trips/#{valid_trip_id}"
+      get trips_path(valid_trip_id)
 
       # Assert
       must_respond_with :success
@@ -42,7 +42,7 @@ describe TripsController do
       invalid_trip_id = -1
 
       # Act
-      get "/trips/#{invalid_trip_id}"
+      get trips_path(invalid_trip_id)
 
       # Assert
       must_respond_with :not_found
