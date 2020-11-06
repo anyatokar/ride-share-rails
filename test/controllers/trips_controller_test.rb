@@ -50,26 +50,24 @@ describe TripsController do
   end
 
   describe "create" do
+    Trip.destroy_all
+
+    let (:kendrick_jr) {
+      Passenger.create(name: "Kendrick Marks Jr")
+    }
+
+    let (:michelle_obama) {
+      Passenger.create(name: "Michelle Obama")
+    }
 
     it "can create a trip" do
-
-      let (:mark_marks) {
-        Driver.create(name: "Mark Marks")
-      }
-
-      let (:michelle_obama) {
-        Passenger.create(name: "Michelle Obama")
-      }
-
-      let (:new_trip_hash) {
-        {
-          trip: {
-            driver_id: mark_marks.id,
-            passenger_id: michelle_obama.id,
-            date: "2021-01-20",
-            rating: "4",
-            cost: "4000",
-          },
+      new_trip_hash = {
+        trip: {
+          driver_id: kendrick_jr.id,
+                  passenger_id: michelle_obama.id,
+                  date: "2020-11-04",
+                  rating: "5",
+                  cost: "5000"
         }
       }
 
@@ -80,13 +78,13 @@ describe TripsController do
       must_respond_with :redirect
       must_redirect_to root_path
 
-      expect(Trip.last.driver_id).must_equal trip_hash[:trip][:driver_id]
-      expect(Trip.last.driver_id.name).must_equal mark_marks.name
-      expect(Trip.last.passenger_id).must_equal trip_hash[:trip][:passenger_id]
+      expect(Trip.last.driver_id).must_equal new_trip_hash[:trip][:driver_id]
+      expect(Trip.last.driver_id.name).must_equal kendrick_jr.name
+      expect(Trip.last.passenger_id).must_equal new_trip_hash[:trip][:passenger_id]
       expect(Trip.last.passenger_id.name).must_equal michelle_obama.name
-      expect(Trip.last.date).must_equal trip_hash[:trip][:date]
-      expect(Trip.last.rating).must_equal trip_hash[:trip][:rating]
-      expect(Trip.last.cost).must_equal trip_hash[:trip][:cost]
+      expect(Trip.last.date).must_equal new_trip_hash[:trip][:date]
+      expect(Trip.last.rating).must_equal new_trip_hash[:trip][:rating]
+      expect(Trip.last.cost).must_equal new_trip_hash[:trip][:cost]
     end
 
     it "will not create a trip with invalid params" do
