@@ -8,6 +8,7 @@
 # end
 # random_license_plate(17) # the ones in the csv file are 17 characters
 
+
 require "test_helper"
 
 describe DriversController do
