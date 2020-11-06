@@ -17,9 +17,10 @@ class TripsController < ApplicationController
   # end
 
   def create
+    driver_to_assign =  Driver.find_by(available: "true")
     @trip = Trip.new(
       passenger_id: params[:passenger_id],
-      driver_id: 3,
+      driver_id: driver_to_assign.id,
       date: Date.today,
       cost: rand(1..5000), # set cost to random number
       rating: nil # set rating to nil

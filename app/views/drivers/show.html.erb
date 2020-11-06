@@ -4,11 +4,12 @@
     <%= image_tag("http://www.randomkittengenerator.com/cats/rotator.php", :alt => "a photo of our furry passenger cat friend") %>
   </div>
   <br>
-  <h4><strong>Driver VIN:</strong> <%= @driver.vin.upcase %> </h4>
-  <h4><strong>Driver Status:</strong> <%= @driver.available ? "Available" : "Unavailable" %> </h4>
+  <h4><strong>VIN:</strong> <%= @driver.vin.upcase %> </h4>
+  <h4><strong>Status:</strong> <%= @driver.available ? "Available" : "Unavailable" %> </h4>
 <!--  <h2>Driver ID: <%#= @driver.id %></h2>-->
 <!--  <h2>Vin: <%#= @driver.vin %></h2>-->
 <!--  <h2>Driver Available? <%#= @driver.id %></h2>-->
+  <h4><strong>Average Rating:</strong> <%= @driver.average_rating %> </h4>
   <li><%= button_to "Edit", edit_driver_path(@driver), :class => "button", method: :get %></li>
   <li><%= button_to "Delete", driver_path(@driver), :class => "button", method: :delete, data: {confirm: "Are you sure?"}%></li>
   <br><br>
