@@ -96,24 +96,10 @@ describe DriversController do
           available: "false"
         }
       }
-
-      @driver = Driver.create(name: "Kendrick Marks Jr")
     end
 
-
-    # let (:driver) {
-    #   Driver.create(name: "Kendrick Marks Jr")
-    # }
     it "can create a new driver with valid information accurately, and redirect" do
 
-      # Arrange
-      # Set up the form data
-
-      # what ar you trying to do here? create a driver?
-      new_driver_id = @driver.id
-
-      # Act-Assert
-      # Ensure that there is a change of 1 in Driver.count
       expect {
         post drivers_path, params: @driver_hash
       }.must_differ 'Driver.count', 1
@@ -126,6 +112,8 @@ describe DriversController do
       # Check that the controller redirected the user
       must_respond_with :redirect
       # must_redirect_to "/drivers/#{new_driver_id}" this would've gone to the incorrect driver, the former one, did you mean the 2nd?
+      id = Driver.find_by(name: "Kendrick Marks Jr").id
+      must_redirect_to driver_path(id)
     end
 
     it "does not create a driver if the form data violates Driver validations, and responds with a redirect" do
