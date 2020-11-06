@@ -30,7 +30,11 @@
     </table>
 
   <!--  <h2>By: <%#= @driver.author.name %></h2>-->
-  <li><%= button_to "Edit", edit_trip_path(@trip), :class => "button", method: :get %></li>
+  <% if @trip.rating.nil? %>
+    <li><%= button_to "Edit/Rate", edit_trip_path(@trip), :class => "button", method: :get %></li>
+  <% else %>
+    <li><%= button_to "Edit", edit_trip_path(@trip), :class => "button", method: :get %></li>
+  <% end %>
   <li><%= button_to "Delete", trip_path(@trip), :class => "button", method: :delete, data: {confirm: "Are you sure?"} %></li>
   <br><br>
   <%#= link_to "Edit", edit_trip_path(@trip) %>
