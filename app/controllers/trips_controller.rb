@@ -26,7 +26,7 @@ class TripsController < ApplicationController
       rating: nil # set rating to nil
     )
     if @trip.save
-
+      driver_to_assign.update(available: "false")
       redirect_to trip_path(@trip.id)
     else
       render :new #TODO: alert user somehow

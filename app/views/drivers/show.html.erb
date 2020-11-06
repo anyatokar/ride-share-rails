@@ -5,7 +5,7 @@
   </div>
   <br>
   <h4><strong>VIN:</strong> <%= @driver.vin.upcase %> </h4>
-  <h4><strong>Status:</strong> <%= @driver.available ? "Available" : "Unavailable" %> </h4>
+  <h4><strong>Status:</strong> <%= ActiveModel::Type::Boolean.new.cast(@driver.available) ? "Available" : "Unavailable" %> </h4>
 <!--  <h2>Driver ID: <%#= @driver.id %></h2>-->
 <!--  <h2>Vin: <%#= @driver.vin %></h2>-->
 <!--  <h2>Driver Available? <%#= @driver.id %></h2>-->
