@@ -24,7 +24,7 @@
           <td><%= @trip.date %></td>
           <td><%= link_to @trip.driver.name, driver_path(@trip.driver.id) %></td>
           <td><%= link_to @trip.passenger.name, passenger_path(@trip.passenger.id) %></td>
-          <td>$<%= @trip.to_currency %></td>
+          <td>$<%= @trip.to_currency(@trip.cost) %></td>
           <td><%= @trip.rating %></td>
         </tr>
     </table>

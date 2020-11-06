@@ -6,6 +6,7 @@
   <br>
   <!--  <h2>By: <%#= @driver.author.name %></h2>-->
   <h4><strong>Phone Number:</strong> <%= @passenger.phone_num %></h4>
+  <h4><strong>Total Spent:</strong> $<%= @passenger.to_currency(@passenger.total_spent) %></h4>
   <li><%= button_to "Edit", edit_passenger_path(@passenger), :class => "button", method: :get %></li>
   <li><%= button_to "Request New Trip", passenger_trips_path(@passenger.id), method: :post, :class => "button" %></li>
   <li><%= button_to "Delete", passenger_path(@passenger), :class => "button", method: :delete, data: {confirm: "Are you sure?"}%></li>
