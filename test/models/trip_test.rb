@@ -1,30 +1,32 @@
 require "test_helper"
 
 describe Trip do
-  let (:new_trip) {
-    Trip.new(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 1234)
-  }
+  describe "create" do
+    let (:new_trip) {
+      Trip.new(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 1234)
+    }
 
-  let (:new_driver) {
-    Driver.create(name: "Kendrick Marks Jr")
-  }
+    let (:new_driver) {
+      Driver.create(name: "Kendrick Marks Jr")
+    }
 
-  let (:new_passenger) {
-    Driver.create(name: "Joe Biden")
-  }
+    let (:new_passenger) {
+      Driver.create(name: "Joe Biden")
+    }
 
-  it "can be instantiated" do
-    expect(new_trip.valid?).must_equal true
-  end
+    it "can be instantiated" do
+      expect(new_trip.valid?).must_equal true
+    end
 
-  it "will have the required fields" do
-    # Arrange
-    new_trip.save
-    trip = Trip.last
-    [:driver_id, :passenger_id, :date, :rating, :cost].each do |field|
+    it "will have the required fields" do
+      # Arrange
+      new_trip.save
+      trip = Trip.last
+      [:driver_id, :passenger_id, :date, :rating, :cost].each do |field|
 
-      # Assert
-      expect(trip).must_respond_to field
+        # Assert
+        expect(trip).must_respond_to field
+      end
     end
   end
 
@@ -43,8 +45,25 @@ describe Trip do
   end
 
   describe "validations" do
+    let (:new_trip) {
+      Trip.new(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 1234)
+    }
+
+    let (:new_driver) {
+      Driver.create(name: "Kendrick Marks Jr")
+    }
+
+    let (:new_passenger) {
+      Driver.create(name: "Joe Biden")
+    }
+
     it "must have a passenger_id" do
+
+
+      new_driver = Driver.create(name: "Waldo", vin: "ALWSS52P9NEYLVDE9", available:"true")
+      new_passenger = Passenger.create(name: "Kari", phone_num: "111-111-1211")
       # Arrange
+      new_trip = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 6334)
       new_trip.passenger_id = nil
 
       # Assert
@@ -55,16 +74,25 @@ describe Trip do
 
     it "must have a date" do
       # Arrange
+      #
+      new_driver = Driver.create(name: "Waldo", vin: "ALWSS52P9NEYLVDE9", available:"true")
+      new_passenger = Passenger.create(name: "Kari", phone_num: "111-111-1211")
+      # Arrange
+      new_trip = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 6334)
       new_trip.date = nil
 
       # Assert
       expect(new_trip.valid?).must_equal false
       expect(new_trip.errors.messages).must_include :date
-      expect(new_trip.errors.messages[:vin]).must_equal ["can't be blank"] #TODO we can add regex if we want. what values do we want to accept?
+      expect(new_trip.errors.messages[:vin]).must_equal ["can't be blank"]
     end
 
-    it "must have a rating" do  #TODO rating is a must?
+    it "must have a rating" do
       # Arrange
+      new_driver = Driver.create(name: "Waldo", vin: "ALWSS52P9NEYLVDE9", available:"true")
+      new_passenger = Passenger.create(name: "Kari", phone_num: "111-111-1211")
+      # Arrange
+      new_trip = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 6334)
       new_trip.rating = nil
 
       # Assert
@@ -74,13 +102,17 @@ describe Trip do
     end
 
     it "must have a cost" do
+      new_driver = Driver.create(name: "Waldo", vin: "ALWSS52P9NEYLVDE9", available:"true")
+      new_passenger = Passenger.create(name: "Kari", phone_num: "111-111-1211")
+      # Arrange
+      new_trip = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 6334)
       # Arrange
       new_trip.cost = nil
 
       # Assert
       expect(new_trip.valid?).must_equal false
       expect(new_trip.errors.messages).must_include :cost
-      expect(new_trip.errors.messages[:cost]).must_equal ["can't be blank"]
+      expect(new_trip.errors.messages[:cost]).must_equal ["can't be blank", "is not a number"]
     end
   end
 
