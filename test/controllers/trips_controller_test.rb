@@ -10,28 +10,24 @@ describe TripsController do
   end
 
   describe "show" do
-    before do
-      @trip = Trip.create(driver_id: kendrick_jr.id,
-                          passenger_id: joe_biden.id,
-                          date: "2020-11-04",
-                          rating: "5",
-                          cost: "5000")
-    end
 
-      let (:kendrick_jr) {
-        Driver.create(name: "Kendrick Marks Jr", vin: "BZ7DZZM8H4O2PC34Q", available: "true")
-      }
+    let (:kendrick_jr) {
+      Driver.create!(name: "Kendrick Marks Jr", vin: "BZ7DZZM8H4O2PC34Q", available: "true")
+    }
 
-      let (:joe_biden) {
-        Passenger.create(name: "Kendrick Marks Jr", phone_num: "234-586-4956")
-      }
+    let (:michelle_obama) {
+      Passenger.create!(name: "Kendrick Marks Jr", phone_num: "234-586-4956")
+    }
 
     it "will get show for valid ids" do
       # Arrange
-      valid_trip_id = @trip.id
+      kendrick_jr
+      post passenger_trips_path(michelle_obama.id)
+
+      valid_trip_id = Trip.last.id
 
       # Act
-      get trips_path(valid_trip_id)
+      get trip_path(valid_trip_id)
 
       # Assert
       must_respond_with :success
@@ -42,7 +38,7 @@ describe TripsController do
       invalid_trip_id = -1
 
       # Act
-      get trips_path(invalid_trip_id)
+      get trip_path(invalid_trip_id)
 
       # Assert
       must_respond_with :not_found
@@ -50,18 +46,6 @@ describe TripsController do
   end
 
   describe "create" do
-    before do
-    @new_trip_hash = {
-      trip: {
-        driver_id: kendrick_jr.id,
-        passenger_id: michelle_obama.id,
-        date: "2020-11-04",
-        rating: "5",
-        cost: "5000"
-      }
-    }
-    end
-
     let (:kendrick_jr) {
       Driver.create!(name: "Kendrick Marks Jr", vin: "BZ7DZZM8H4O2PC34Q", available: "true")
     }
@@ -95,16 +79,8 @@ describe TripsController do
   end
 
   describe "edit" do
-    before do
-      Trip.create(driver_id: kendrick_jr.id,
-                  passenger_id: joe_biden.id,
-                  date: "2020-11-04",
-                  rating: "5",
-                  cost: "5000")
-    end
-
     let (:kendrick_jr) {
-      Driver.create(name: "Kendrick Marks Jr", vin: "BZ7DZZM8H4O2PC34Q", available: "true")
+    Driver.create(name: "Kendrick Marks Jr", vin: "BZ7DZZM8H4O2PC34Q", available: "true")
     }
 
     let (:joe_biden) {
@@ -119,30 +95,18 @@ describe TripsController do
       Passenger.create(name: "Michelle Obama", phone_num: "234-086-4956")
     }
 
-    let (:new_trip_hash) {
-      {
-        trip: {
-          driver_id: mark_marks.id,
-          passenger_id: michelle_obama.id,
-          date: "2021-01-20",
-          rating: "4",
-          cost: "4000",
-        },
-      }
-    }
-
     it "responds with success when getting the edit page for an existing, valid trip" do
       # Arrange
       # Ensure there is an existing trip saved
+      kendrick_jr
+      post passenger_trips_path(michelle_obama.id)
+
       valid_id = Trip.last.id
 
       # Act
       get edit_trip_path(valid_id)
 
       # Assert
-      expect {
-        patch trip_path(valid_id), params: new_trip_hash
-      }.wont_change "Trip.count"
 
       must_respond_with :success
     end
@@ -156,73 +120,41 @@ describe TripsController do
       get edit_trip_path(invalid_id)
 
       # Assert
-      must_respond_with :redirect
-
-      expect {
-        patch trip_path(invalid_id), params: new_trip_hash
-      }.wont_change "Trip.count"
-
+      must_respond_with :not_found
     end
   end
 
   describe "update" do
-    before do
-      Trip.create(driver_id: kendrick_jr.id,
-                  passenger_id: joe_biden.id,
-                  date: "2020-11-04",
-                  rating: "5",
-                  cost: "5000")
-    end
-
     let (:kendrick_jr) {
       Driver.create(name: "Kendrick Marks Jr", vin: "BZ7DZZM8H4O2PC34Q", available: "true")
-    }
-
-    let (:joe_biden) {
-      Passenger.create(name: "Joe Biden",  phone_num: "234-586-4956")
-    }
-
-    let (:mark_marks) {
-      Driver.create(name: "Mark Marks", vin: "B97DZZM8H4O2PC34Q", available: "true")
     }
 
     let (:michelle_obama) {
       Passenger.create(name: "Michelle Obama", phone_num: "234-086-4956")
     }
 
-    let (:new_trip_hash) {
-      {
-        trip: {
-          driver_id: mark_marks.id,
-          passenger_id: michelle_obama.id,
-          date: "2021-01-20",
-          rating: "4",
-          cost: "4000",
-        },
-      }
-    }
+    it "will update a model with a valid post request (add a rating)" do
+      kendrick_jr
+      post passenger_trips_path(michelle_obama.id)
+      id = Trip.last.id
 
-    it "will update a model with a valid post request" do
-      id = Trip.first.id
-      expect {
-        patch trip_path(id), params: new_trip_hash
-      }.wont_change "Trip.count"
+      # expect {
+      #   patch trip_path(id), params[:trip.update(trip_edit_params)
+      # }.wont_change "Trip.count"
+
+      expect { Trip.last.update(rating: "4") }.wont_change "Trip.count"
 
       must_respond_with :redirect
 
       trip = Trip.find_by(id: id)
-      expect(trip.driver_id).must_equal new_trip_hash[:trip][:driver_id].to_s
-      expect(trip.passenger_id.name).must_equal new_trip_hash michelle_obama.name
-      expect(trip.date).must_equal new_trip_hash[:trip][:date]
-      expect(trip.rating).must_equal new_trip_hash[:trip][:rating]
-      expect(trip.cost).must_equal new_trip_hash[:trip][:cost]
+      expect(trip.rating).must_equal "4"
     end
 
     it "will respond with not_found for invalid ids" do
       id = -1
 
       expect {
-        patch trip_path(id), params: new_trip_hash
+        patch trip_path(id)
       }.wont_change "Trip.count"
 
       must_respond_with :not_found
@@ -236,29 +168,22 @@ describe TripsController do
 
 
   describe "destroy" do
-    before do
-      Trip.create(driver_id: kendrick_jr.id,
-                  passenger_id: joe_biden.id,
-                  date: "2020-11-04",
-                  rating: "5",
-                  cost: "5000")
-    end
-
     let (:kendrick_jr) {
-      Driver.create(name: "Kendrick Marks Jr")
+      Driver.create!(name: "Kendrick Marks Jr", vin: "BZ7DZZM8H4O2PC34Q", available: "true")
     }
 
-    let (:joe_biden) {
-      Passenger.create(name: "Joe Biden")
+    let (:michelle_obama) {
+      Passenger.create!(name: "Michelle Obama", phone_num: "234-086-4956")
     }
 
     it "will reduce number of existing trips by 1" do
-      trip = Trip.last
+      kendrick_jr
+      post passenger_trips_path(michelle_obama.id)
 
-      expect(trip).must_be_instance_of Trip
+      id = Trip.last.id
 
       expect {
-        delete trip_path(trip.id)
+        delete trip_path(id)
       }.must_change "Trip.count", -1
     end
   end
