@@ -90,7 +90,7 @@ describe DriversController do
 
   describe "create" do
     before do
-      Passenger.destroy_all
+      Driver.destroy_all
       @driver_hash = {
         driver: {
           name: "Kendrick Marks Jr",
@@ -172,11 +172,11 @@ describe DriversController do
         driver: {
           name: "Kendrick Marks Jr",
           vin: "EMX66UMNBYNHH790R",
-          available: "false"
+          available: "true"
         }
       }
 
-    Driver.create(name: "Mark Marks")
+    Driver.create(name: "Mark Marks", vin: "EMX67UMNBYNHH790R", available: "true")
     end
 
     it "can create a new driver with valid information accurately, and redirect" do
@@ -220,20 +220,20 @@ describe DriversController do
       must_respond_with :redirect
     end
 
-    it "does not create a driver if the form data violates Driver validations, and responds with a redirect" do
-      # TODO Note: This will not pass until ActiveRecord Validations lesson
-      # Arrange
-      # Ensure there is an existing driver saved
-      # Assign the existing driver's id to a local variable
-      # Set up the form data so that it violates Driver validations
-
-      # Act-Assert
-      # Ensure that there is no change in Driver.count
-
-      # Assert
-      # Check that the controller redirects
-
-    end
+    # it "does not create a driver if the form data violates Driver validations, and responds with a redirect" do
+    #   # TODO Note: This will not pass until ActiveRecord Validations lesson
+    #   # Arrange
+    #   # Ensure there is an existing driver saved
+    #   # Assign the existing driver's id to a local variable
+    #   # Set up the form data so that it violates Driver validations
+    #
+    #   # Act-Assert
+    #   # Ensure that there is no change in Driver.count
+    #
+    #   # Assert
+    #   # Check that the controller redirects
+    #
+    # end
   end
 
   describe "destroy" do

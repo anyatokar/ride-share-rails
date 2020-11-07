@@ -30,12 +30,10 @@ describe Trip do
 
   describe "relationships" do
     it "can have many trips" do
-    # Arrange
-    new_driver = Driver.create(name: "Waldo", vin: "ALWSS52P9NEYLVDE9")
+    new_driver = Driver.create(name: "Waldo", vin: "ALWSS52P9NEYLVDE9", available:"true")
     new_passenger = Passenger.create(name: "Kari", phone_num: "111-111-1211")
     trip_1 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 1234)
     trip_2 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 6334)
-
     new_driver_trip_count = Trip.all.find_all { |trip| trip.driver_id.to_i == new_driver.id.to_i}.length
     new_passenger_trip_count = Trip.all.find_all { |passenger| passenger.passenger_id.to_i == new_passenger.id.to_i}.length
     # Assert
