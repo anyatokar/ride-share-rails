@@ -1,7 +1,7 @@
 class TripsController < ApplicationController
-  def index
-    @trips = Trip.paginate(page: params[:page]).order("id")
-  end
+  # def index # ended up feeling that this was not really necessary, because of the way our program displayed trips elsewhere
+  #   @trips = Trip.paginate(page: params[:page]).order("id")
+  # end
 
   def show
     trip_id = params[:id]
@@ -12,7 +12,7 @@ class TripsController < ApplicationController
     end
   end
 
-  # def new
+  # def new # ended up feeling that this was not really necessary, because of the way our program new trip button works
   #   @trip = Trip.new
   # end
 
