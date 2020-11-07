@@ -2,12 +2,12 @@ require "test_helper"
 
 describe TripsController do
 
-  describe "index" do
-    it "should get index" do
-      get trips_path
-      must_respond_with :success
-    end
-  end
+  # describe "index" do -- deleted due to RESTful routes
+  #   it "should get index" do
+  #     get trips_path
+  #     must_respond_with :success
+  #   end
+  # end
 
   describe "show" do
 
