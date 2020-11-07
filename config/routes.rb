@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root to: 'homepages#index'
   # TODO-- determine which RESTful routes are needed later
   resources :drivers
-  resources :trips, except: [:new, :index]
+  resources :trips, except: [:new, :index, :create]
   resources :passengers do
     resources :trips, only: [:create]
   end
