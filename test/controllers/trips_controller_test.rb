@@ -74,7 +74,12 @@ describe TripsController do
     end
 
     it "will not create a trip with invalid params" do
-      # TODO fill this in when we implement validations next week
+      kendrick_jr
+      post passenger_trips_path(michelle_obama.id)
+      id = (michelle_obama.id + 1)
+
+      # should raise error because the id is nil
+      expect { post passenger_trips_path(id) }.must_raise NoMethodError
     end
   end
 
