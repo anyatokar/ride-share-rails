@@ -1,13 +1,3 @@
-# TODO this is random method to generate license plates... keeping for now in case it'll come in handy
-# generates random numbers, source: https://stackoverflow.com/questions/15790841/how-can-i-generate-random-mixed-letters-and-numbers-in-ruby
-# def random_license_plate(length)
-#   letters_and_numbers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-#   license_plate = ""
-#   length.times { |i| license_plate << letters_and_numbers[rand(36)] }
-#   return license_plate
-# end
-# random_license_plate(17) # the ones in the csv file are 17 characters
-
 require "test_helper"
 
 describe DriversController do

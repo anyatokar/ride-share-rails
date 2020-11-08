@@ -97,13 +97,30 @@ describe Driver do
     end
 
     describe "can go online" do
-      # TODO thinking these last 2 can go in the controller? Having trouble visulaizing these
+      it "can online" do
+        new_driver = Driver.create(name: "Waldo", vin: "ALWSS52P9NEYLVDE9", available: "false")
+        new_passenger = Passenger.create(name: "Kari", phone_num: "111-111-1211")
+        trip_1 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 1000)
+
+        new_driver.available = "true"
+
+        expect(new_driver.available).must_equal "true"
+      end
     end
 
     describe "can go offline" do
-      # Your code here
+      it "can online" do
+        new_driver = Driver.create(name: "Waldo", vin: "ALWSS52P9NEYLVDE9", available: "true")
+        new_passenger = Passenger.create(name: "Kari", phone_num: "111-111-1211")
+        trip_1 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 1000)
+
+        new_driver.available = "false"
+
+        expect(new_driver.available).must_equal "false"
+      end
     end
 
-    # You may have additional methods to test
+    end
   end
-end
+
+
