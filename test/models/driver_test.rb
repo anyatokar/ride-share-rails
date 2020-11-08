@@ -67,18 +67,18 @@ describe Driver do
         trip_1 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 1234)
         trip_2 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 6334)
 
-      expect(new_driver.average_rating).must_equal (5 + 3) / 2
+      expect(Driver.last.average_rating).must_equal (5 + 3) / 2
       end
 
-      # it "can account for nil trips and not add them to the total trips" do
-      #   new_driver = Driver.create(name: "Waldo", vin: "ALWSS52P9NEYLVDE9", available:"true")
-      #   new_passenger = Passenger.create(name: "Kari", phone_num: "111-111-1211")
-      #   trip_1 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 1234)
-      #   trip_2 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 6334)
-      #   trip_3 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: nil, cost: 1234)
-      #
-      #   expect(new_driver.average_rating).must_equal (5 + 3) / 2
-      # end
+      it "can account for nil trips and not add them to the total trips" do
+        new_driver = Driver.create(name: "Waldo", vin: "ALWSS52P9NEYLVDE9", available:"true")
+        new_passenger = Passenger.create(name: "Kari", phone_num: "111-111-1211")
+        trip_1 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 5, cost: 1234)
+        trip_2 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: 3, cost: 6334)
+        trip_3 = Trip.create(driver_id: new_driver.id, passenger_id: new_passenger.id, date: Date.today, rating: nil, cost: 1234)
+
+        expect(Driver.last.average_rating).must_equal (5 + 3) / 2
+      end
     end
 
     describe "total earnings" do

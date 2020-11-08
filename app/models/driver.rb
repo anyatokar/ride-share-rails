@@ -7,12 +7,12 @@ class Driver < ApplicationRecord
 
   def average_rating
     nil_counter = 0
-    rating_sum = self.trips.inject(0) do |sum, trip|
+    rating_sum = 0
+    self.trips.each do |trip|
       if trip.rating.nil?
-        sum + 0
         nil_counter += 1
       else
-        sum + trip.rating.to_i
+        rating_sum += trip.rating.to_f
       end
     end
 

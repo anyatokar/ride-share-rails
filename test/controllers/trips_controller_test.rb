@@ -161,8 +161,11 @@ describe TripsController do
     end
 
     it "will not update if the params are invalid" do
-      # TODO This test will be examined when we cover validations next week
+      kendrick_jr
+      post passenger_trips_path(michelle_obama.id)
+      id = Trip.last.id
 
+      expect { Trip.last.update(rating: "not a rating") }.wont_change Trip.last.rating
     end
   end
 
