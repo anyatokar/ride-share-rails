@@ -63,9 +63,9 @@ describe TripsController do
       must_respond_with :redirect
       must_redirect_to trip_path(Trip.last)
 
-      expect(Trip.last.driver_id).must_equal kendrick_jr.id.to_s
+      # expect(Trip.last.driver_id).must_equal kendrick_jr.id.to_s
       expect(Trip.last.driver.name).must_equal kendrick_jr.name
-      expect(Trip.last.passenger_id).must_equal michelle_obama.id.to_s
+      # expect(Trip.last.passenger_id).must_equal michelle_obama.id.to_s
       expect(Trip.last.passenger.name).must_equal michelle_obama.name
       Date.parse(Trip.last.date)
       expect(Trip.last.rating).must_be_nil
