@@ -146,7 +146,7 @@ describe PassengersController do
         }
       }
 
-    Passenger.create(name: "Mark Marks")
+    Passenger.create(name: "Mark Marks", phone_num: "384-343-4583")
     end
 
 
