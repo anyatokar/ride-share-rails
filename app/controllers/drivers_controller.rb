@@ -72,6 +72,7 @@ class DriversController < ApplicationController
       return
     else
       @driver.destroy
+      flash[:red] = "#{@driver.name} has been permanently deleted."
       redirect_to drivers_path
       return
     end
