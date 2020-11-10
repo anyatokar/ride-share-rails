@@ -22,6 +22,17 @@
 <nav>
   <p><%= link_to "Home", root_path %> | <%= link_to "Drivers", drivers_path %> | <%= link_to "Passengers", passengers_path %></p>
 </nav>
+<section class="flash">
+  <% if flash[:green] %>
+    <% flash.each do |name, message| %>
+      <div class="green-message"><strong><%= message %></strong></div>
+    <% end %>
+  <% elsif flash[:red] %>
+    <% flash.each do |name, message| %>
+      <div class="red-message"><strong><%= message %></strong></div>
+    <% end %>
+  <% end %>
+</section>
 <%= yield %>
 <div class="footer-spacer"></div>
 <footer>

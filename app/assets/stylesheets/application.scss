@@ -56,6 +56,14 @@ nav {
     font-size: 1.25em;
 }
 
+section.flash div.green-message {
+    background-color: green;
+}
+
+section.flash div.red-message {
+    background-color: red;
+}
+
 table {
     border-collapse: collapse;
     margin-right: auto;

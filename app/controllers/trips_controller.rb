@@ -7,6 +7,7 @@ class TripsController < ApplicationController
     trip_id = params[:id]
     @trip = Trip.find_by(id: trip_id)
     if @trip.nil?
+      flash[:red] = "Trip not found."
       head :not_found
       return
     end
@@ -27,9 +28,11 @@ class TripsController < ApplicationController
     )
     if @trip.save
       driver_to_assign.update(available: "false")
+      flash[:green] = "You have requested a trip! #{driver_to_assign.name} will pick you up.  Please rate your journey below once complete!"
       redirect_to trip_path(@trip.id)
     else
-      render :new #TODO: alert user somehow
+      flash.now[:red] = "Something went wrong! Please try again."
+      render :new
       return
     end
     #
@@ -54,6 +57,7 @@ class TripsController < ApplicationController
     @trip = Trip.find_by(id: params[:id])
 
     if @trip.nil?
+      flash[:red] = "Trip not found."
       head :not_found
       return
     end
@@ -62,9 +66,11 @@ class TripsController < ApplicationController
   def update
     @trip = Trip.find_by(id: params[:id])
     if @trip.nil?
+      flash[:red] = "Trip not found."
       head :not_found
       return
     elsif @trip.update(trip_edit_params)
+      flash[:green] = "Trip details have been successfully updated."
       redirect_to trip_path(@trip)
       return
     else
@@ -81,6 +87,7 @@ class TripsController < ApplicationController
       return
     else
       @trip.destroy
+      flash[:red] = "Trip ##{@trip.id} has been permanently deleted."
       redirect_to passenger_path(@trip.passenger.id)
       return
     end

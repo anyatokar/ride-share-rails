@@ -206,7 +206,7 @@ describe DriversController do
       }.wont_change count
 
       # Assert
-      # Check that the controller gave back a 404
+      # Check that the controller gave back a redirect
       must_respond_with :redirect
     end
 
@@ -265,7 +265,7 @@ describe DriversController do
 
       # Assert
       # Check that the controller responds or redirects with whatever your group decides
-      must_respond_with :not_found
+      must_redirect_to drivers_path
     end
   end
 end

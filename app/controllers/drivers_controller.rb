@@ -7,7 +7,8 @@ class DriversController < ApplicationController
     driver_id = params[:id]
     @driver = Driver.find_by(id: driver_id)
     if @driver.nil?
-      redirect_to drivers_path, alert: "Driver not found"
+      flash[:red] = "Driver not found."
+      redirect_to drivers_path
       return
     end
   end
@@ -19,6 +20,7 @@ class DriversController < ApplicationController
   def create
     @driver = Driver.new(driver_params)
     if @driver.save
+      flash[:green] = "#{@driver.name} has been successfully created."
       redirect_to driver_path(@driver)
       return
     else
@@ -32,7 +34,8 @@ class DriversController < ApplicationController
 
     if @driver.nil?
       # head :not_found
-      redirect_to drivers_path, alert: "Driver not found"
+      flash[:red] = "Driver not found."
+      redirect_to drivers_path
       return
     end
   end
@@ -41,9 +44,11 @@ class DriversController < ApplicationController
     @driver = Driver.find_by(id: params[:id])
     if @driver.nil?
       # head :not_found
-      redirect_to drivers_path, notice: "Driver not found"
+      flash[:red] = "Driver not found."
+      redirect_to drivers_path
       return
     elsif @driver.update(driver_params)
+      flash[:green] = "Driver details have been successfully updated."
       redirect_to driver_path(@driver) # go to the index so we can see the book in the list
       return
     else # save failed :(
@@ -56,11 +61,13 @@ class DriversController < ApplicationController
     @driver = Driver.find_by(id: params[:id])
 
     if @driver.nil?
-      head :not_found
+      flash[:red] = "Driver not found."
+      redirect_to drivers_path
       return
     elsif Trip.where(driver_id: @driver.id).count > 0 # @lee: if the driver has trips, we want to destroy them first; otherwise, the delete driver button will cause an error
       Trip.where(driver_id: @driver.id).destroy_all
       @driver.destroy
+      flash[:red] = "#{@driver.name} has been permanently deleted."
       redirect_to drivers_path
       return
     else

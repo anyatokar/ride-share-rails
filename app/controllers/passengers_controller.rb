@@ -7,7 +7,8 @@ class PassengersController < ApplicationController
     passenger_id = params[:id]
     @passenger = Passenger.find_by(id: passenger_id)
     if @passenger.nil?
-      head :not_found
+      flash[:red] = "Passenger not found."
+      redirect_to passengers_path
       return
     end
   end
@@ -19,6 +20,7 @@ class PassengersController < ApplicationController
   def create
     @passenger = Passenger.new(passenger_params)
     if @passenger.save
+      flash[:green] = "#{@passenger.name} has been successfully created."
       redirect_to passenger_path(@passenger)
       return
     else
@@ -31,7 +33,8 @@ class PassengersController < ApplicationController
     @passenger = Passenger.find_by(id: params[:id])
 
     if @passenger.nil?
-      head :not_found
+      flash[:red] = "Passenger not found."
+      redirect_to passengers_path
       return
     end
   end
@@ -39,9 +42,11 @@ class PassengersController < ApplicationController
   def update
     @passenger = Passenger.find_by(id: params[:id])
     if @passenger.nil?
-      head :not_found
+      flash[:red] = "Passenger not found."
+      redirect_to passengers_path
       return
     elsif @passenger.update(passenger_params)
+      flash[:green] = "Passenger details have been successfully updated."
       redirect_to passenger_path(@passenger)
       return
     else
@@ -54,7 +59,8 @@ class PassengersController < ApplicationController
     @passenger = Passenger.find_by(id: params[:id])
 
     if @passenger.nil?
-      head :not_found
+      flash[:red] = "Passenger not found."
+      redirect_to passengers_path
       return
     elsif Trip.where(passenger_id: @passenger.id).count > 0 # @ lee: if the passenger has trips, we want to destroy them first; otherwise, the delete passenger button will cause an error
       Trip.where(passenger_id: @passenger.id).destroy_all
@@ -63,6 +69,7 @@ class PassengersController < ApplicationController
       return
     else
       @passenger.destroy
+      flash[:red] = "#{@passenger.name} has been permanently deleted."
       redirect_to passengers_path
       return
     end
